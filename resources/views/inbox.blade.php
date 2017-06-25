@@ -1,0 +1,9 @@
+@extends('layouts.app')
+
+@section('content')
+<!-- page content -->
+
+    <h3>Inbox</h3>
+
+<!-- /page content -->
+@endsection

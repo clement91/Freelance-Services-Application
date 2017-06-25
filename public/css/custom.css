@@ -1,0 +1,95 @@
+/* =======================
+  Welcome.blade
+========================== */
+html, body {
+    /*background-color: #d3e0e9;*/
+    background-image: linear-gradient(to right, #fff 0, #d3e0e9 99%);
+    color: #636b6f;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+    position: relative;
+    bottom: 50px;
+}
+
+.title {
+    font-size: 82px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+.custom-n-txt {
+    font-size: 20px;
+    text-shadow: 2px 2px white;
+}
+
+.txt-ffs {
+    height: 50px;
+}
+
+.moptions {
+    color: #337ab7;
+    font-weight: bold;
+    position: relative;
+    bottom: 12px;
+}
+
+.loptions {
+    color: #337ab7;
+    font-weight: bold;
+    position: relative;
+    top: 12px;
+}
+
+.custom-dropdown {
+  width: 200px !important;
+  height: 40px;
+}
+
+/* =======================
+  profile.blade
+========================== */
+.custom-ph {
+  font-size: 20px;
+}
+
+/* =======================
+  .blade
+========================== */

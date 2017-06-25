@@ -1,0 +1,13 @@
+29 Apr 2017
+------------
+1. Profile Controller
+  - Update for info - DONE
+  - Update handling on image upload - DONE
+  - Change password handling
+  - Check for all info handling
+
+2. What is the next step
+ - Code Refactoring by model
+ - Code Refactoring js css file
+ - Git Kraken
+ - Continue with Laracasts
