@@ -3,7 +3,7 @@
 @section('content')
     <!-- page content -->
 
-    <h3>Add New Service</h3>
+    <h3>Add New Service 1</h3>
 
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
