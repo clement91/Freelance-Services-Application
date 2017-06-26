@@ -12,6 +12,12 @@
  */
 
 function SmartWizard(target, options) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     this.target       = target;
     this.options      = options;
     this.curStepIdx   = options.selected;
@@ -53,12 +59,14 @@ function SmartWizard(target, options) {
         elmActionBar.append($this.loader);
         $this.target.append($this.elmStepContainer);
         elmActionBar.append($this.buttons.finish)
-                    .append($this.buttons.next)
-                    .append($this.buttons.previous);
+                    .append($this.buttons.previous)
+                    .append($this.buttons.next);
         $this.target.append(elmActionBar);
         this.contentWidth = $this.elmStepContainer.width();
 
         $($this.buttons.next).click(function() {
+            $('.thrsteps').removeClass('hide');
+
             $this.goForward();
             return false;
         });
@@ -74,10 +82,36 @@ function SmartWizard(target, options) {
                         return false;
                     }
                 }else{
+                  /*
                     var frm = $this.target.parents('form');
                     if(frm && frm.length){
                         frm.submit();
                     }
+                  */
+                  console.log("$('#job_title').val():" + $('#job_title').val());
+
+                  $.post( "/service/submit-job", {
+                    "title": $('#job_title').val(),
+                    "desc": $('#job_desc').val(),
+                    "category": $('#job_category').val(),
+                    "price": $('#job_price').val(),
+                    "instruction": $('#job_instruction').val(),
+                    "tags": $('#job_tags').val(),
+                    "location": $('#job_location').val(),
+                    "days": $('#job_days').val(),
+                    "images": $('#job_imgs').val(),
+                    "links": $('#job_links').val(),
+                  }, function(rx) {
+                    if(rx){
+                      console.log(rx)
+                      BootstrapDialog.show({
+                          title: ' Service',
+                          message: 'Service created successful. JOBID:' + rx
+                      });
+                    }
+
+                  });
+
                 }
             }
             return false;
@@ -439,7 +473,7 @@ $.fn.smartWizard.defaults = {
     errorSteps:[],    // Array Steps with errors
     labelNext:'Next',
     labelPrevious:'Previous',
-    labelFinish:'Finish',
+    labelFinish:'Submit',
     noForwardJumping: false,
     onLeaveStep: null, // triggers when leaving a step
     onShowStep: null,  // triggers when showing a step

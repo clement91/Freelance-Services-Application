@@ -250,58 +250,11 @@
                           <span class="badge bg-green"></span>
                         </a>
                         <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                          <li>
-                            <a>
-                              <span class="image"><img src="img/default.jpg" alt="Profile Image" /></span>
-                              <span>
-                                <span>John Smith</span>
-                                <span class="time">3 mins ago</span>
-                              </span>
-                              <span class="message">
-                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                              </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a>
-                              <span class="image"><img src="img/default.jpg" alt="Profile Image" /></span>
-                              <span>
-                                <span>John Smith</span>
-                                <span class="time">3 mins ago</span>
-                              </span>
-                              <span class="message">
-                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                              </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a>
-                              <span class="image"><img src="img/default.jpg" alt="Profile Image" /></span>
-                              <span>
-                                <span>John Smith</span>
-                                <span class="time">3 mins ago</span>
-                              </span>
-                              <span class="message">
-                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                              </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a>
-                              <span class="image"><img src="img/default.jpg" alt="Profile Image" /></span>
-                              <span>
-                                <span>John Smith</span>
-                                <span class="time">3 mins ago</span>
-                              </span>
-                              <span class="message">
-                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                              </span>
-                            </a>
-                          </li>
+                          <div class="text-center"><br/>No new message<br/></div>
                           <li>
                             <div class="text-center">
                               <a>
-                                <strong>See All Alerts</strong>
+                                <strong>See All Messages</strong>
                                 <i class="fa fa-angle-right"></i>
                               </a>
                             </div>
@@ -474,7 +427,10 @@
     <!-- Vendors -->
     <script src="{{ asset('vendors/Bootstrap-dialog/bootstrap-dialog.js') }}"></script>
     <script src="{{ asset('vendors/BootstrapFormHelpers/dist/js/bootstrap-formhelpers.js') }}"></script>
+
+    <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>
+    <script src="{{ asset('js/add_new_service.js') }}"></script>
 
 </body>
 </html>

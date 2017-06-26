@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\User;
+use App\Job;
 use Illuminate\Http\Request;
+
 
 class ServiceController extends Controller
 {
@@ -38,5 +40,40 @@ class ServiceController extends Controller
     public function find_service()
     {
         return view('find_service');
+    }
+
+    public function  submit_job(Request $request)
+    {
+      $user_id = Auth::user()->id;
+
+      $new_job = new Job;
+      $new_job->title = $request->title;
+      $new_job->description = $request->desc;
+      $new_job->category = $request->category;
+      $new_job->price = $request->price;
+      $new_job->instruction = $request->instruction;
+      $new_job->tags = $request->tags;
+      $new_job->location = $request->location;
+      $new_job->days_to_deliver = $request->days;
+      $new_job->image_path = $request->images;
+      $new_job->url_link = $request->links;
+      $new_job->users = $user_id;
+
+      if($new_job->save()){
+        //get datetime & update job id
+        date_default_timezone_set('asia/singapore');
+
+        $date = date("Ymd");
+        //$time = date("His");
+
+        $job_id = $date .$new_job->id;
+        $Job = Job::where('id', $new_job->id);
+        $Job->update(['job_id' =>  $job_id ]);
+
+        return $job_id;
+      }
+
+
+      return 0;
     }
 }

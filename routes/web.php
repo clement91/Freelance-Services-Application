@@ -34,6 +34,8 @@ Route::get('/service', 'ServiceController@index');
 Route::get('/add-new-service', 'ServiceController@add_new_service');
 Route::get('/find-service', 'ServiceController@find_service');
 
+Route::post('/service/submit-job', 'ServiceController@submit_job');
+
 //others misc. controller
 Route::get('/settings', 'SettingController@index');
 Route::get('/help', 'HelpController@index');
