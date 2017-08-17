@@ -32,6 +32,7 @@
 
     <!-- Vendors -->
     <link href="{{ asset('vendors/BootstrapFormHelpers/dist/css/bootstrap-formhelpers.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -427,6 +428,7 @@
     <!-- Vendors -->
     <script src="{{ asset('vendors/Bootstrap-dialog/bootstrap-dialog.js') }}"></script>
     <script src="{{ asset('vendors/BootstrapFormHelpers/dist/js/bootstrap-formhelpers.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.js') }}"></script>
 
     <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>

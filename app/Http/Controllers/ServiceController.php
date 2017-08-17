@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\Job;
+use App\JobCategory;
+use App\Location;
 use Illuminate\Http\Request;
 
 
@@ -27,13 +29,46 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('service');
+        $out = [];
+        $user_id = Auth::user()->id;
+
+        //get open job
+        $jobs_g = Job::where('users', $user_id)->get();
+        if($jobs_g->count()){
+          foreach($jobs_g as $key=>$job){
+            $out['openJobs'][$key]['job_id'] = $job->job_id;
+            $out['openJobs'][$key]['title'] = $job->title;
+            $out['openJobs'][$key]['desc'] = $job->description;
+          }
+        }
+        //return $out;
+        return view('service', $out);
     }
 
 
     public function add_new_service()
     {
-        return view('add_new_service');
+        $out = [];
+
+        $jobcat_g = JobCategory::get();
+        if($jobcat_g->count()){
+          foreach($jobcat_g as $key=>$jobcat){
+            $out['jobCategory'][$key]['id'] = $jobcat->id;
+            $out['jobCategory'][$key]['parent'] = $jobcat->parent_category;
+            $out['jobCategory'][$key]['child'] = $jobcat->children_category;
+          }
+        }
+
+        $loc_g = Location::get();
+        if($loc_g->count()){
+          foreach($loc_g as $key=>$loc){
+            $out['location'][$key]['id'] = $loc->id;
+            $out['location'][$key]['location'] = $loc->location;
+          }
+        }
+
+        //return $out;
+        return view('add_new_service', $out);
     }
 
 

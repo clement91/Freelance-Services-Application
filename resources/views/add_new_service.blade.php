@@ -71,7 +71,11 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_category">Category<span class="required">*</span>
                   </label>
                   <div class="col-md-2 col-sm-2 col-xs-12">
-                    <input type="text" id="job_category" name="job_category" required="required" class="form-control col-md-7 col-xs-12">
+                    <select id="job_category" name="job_category" class="selectpicker">
+                      @foreach($jobCategory as $jc)
+                        <option value="{{ $jc['id'] }}">{{ $jc['id'] }}</option>
+                      @endforeach
+                    </select>
                   </div>
 
                   <label class="control-label col-md-2 col-sm-2 col-xs-12" for="job_price">Price<span class="required">*</span>
@@ -101,7 +105,11 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_location">Location <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="job_location" name="job_location" required="required" class="form-control col-md-7 col-xs-12">
+                    <select id="job_location" name="job_location" class="selectpicker">
+                      @foreach($location as $loc)
+                        <option value="{{ $loc['id'] }}">{{ $loc['location'] }}</option>
+                      @endforeach
+                    </select>
                   </div>
                 </div>
 
