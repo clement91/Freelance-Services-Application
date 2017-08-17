@@ -2,7 +2,6 @@
 
 @section('content')
 <!-- page content -->
-
     <h3>View & Edit Service</h3>
 
     <div id="newBlock" class="col-md-4 col-sm-4 col-xs-12" >

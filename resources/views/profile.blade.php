@@ -2,7 +2,6 @@
 
 @section('content')
 <!-- page content -->
-
     <h3>Profile</h3>
 
     <div class="row">

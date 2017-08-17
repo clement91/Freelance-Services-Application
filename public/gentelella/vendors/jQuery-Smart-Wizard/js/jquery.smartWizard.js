@@ -88,7 +88,7 @@ function SmartWizard(target, options) {
                         frm.submit();
                     }
                   */
-                  console.log("$('#job_title').val():" + $('#job_title').val());
+                  //console.log("$('#job_title').val():" + $('#job_title').val());
 
                   $.post( "/service/submit-job", {
                     "title": $('#job_title').val(),
@@ -99,8 +99,12 @@ function SmartWizard(target, options) {
                     "tags": $('#job_tags').val(),
                     "location": $('#job_location').val(),
                     "days": $('#job_days').val(),
-                    "images": $('#job_imgs').val(),
+                    //"images": $('#job_imgs').val(),
+                    "images": 'test',
                     "links": $('#job_links').val(),
+                    "max": $('#max_jobs').val(),
+                    "email": $('#chk-email').attr('value'),
+                    "sms": $('#chk-sms').attr('value'),
                   }, function(rx) {
                     if(rx){
                       console.log(rx)

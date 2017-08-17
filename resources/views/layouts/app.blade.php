@@ -26,6 +26,7 @@
     <link href="../gentelella/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="../gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="../gentelella/vendors/dropzone/dist/dropzone.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../gentelella/build/css/custom.min.css" rel="stylesheet">
@@ -33,6 +34,8 @@
     <!-- Vendors -->
     <link href="{{ asset('vendors/BootstrapFormHelpers/dist/css/bootstrap-formhelpers.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/selectize.js-master/dist/css/selectize.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -59,7 +62,7 @@
               <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                   <div class="navbar nav_title" style="border: 0;">
-                    <a href="/" class="site_title">&nbsp;<i class="fa fa-stack-overflow"></i>&nbsp;<span>fsa</span></a>
+                    <a href="/" class="site_title">&nbsp;<span>Freelance Services</span></a>
                   </div>
 
                   <div class="clearfix"></div>
@@ -382,8 +385,9 @@
     </div>
 
     <!-- Scripts -->
+    <!--
     <script src="{{ asset('js/app.js') }}"></script>
-
+    -->
     <!-- jQuery -->
     <script src="../gentelella/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -421,6 +425,7 @@
     <!-- bootstrap-daterangepicker -->
     <script src="../gentelella/vendors/moment/min/moment.min.js"></script>
     <script src="../gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="{{ asset('vendors/dropzone/dropzone.js') }}"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="../gentelella/build/js/custom.js"></script>
@@ -429,6 +434,8 @@
     <script src="{{ asset('vendors/Bootstrap-dialog/bootstrap-dialog.js') }}"></script>
     <script src="{{ asset('vendors/BootstrapFormHelpers/dist/js/bootstrap-formhelpers.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.js') }}"></script>
+    <script src="{{ asset('vendors/selectize.js-master/dist/js/standalone/selectize.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap-switch-master/dist/js/bootstrap-switch.js') }}"></script>
 
     <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>

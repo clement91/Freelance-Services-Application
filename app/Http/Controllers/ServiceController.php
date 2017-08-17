@@ -55,7 +55,7 @@ class ServiceController extends Controller
           foreach($jobcat_g as $key=>$jobcat){
             $out['jobCategory'][$key]['id'] = $jobcat->id;
             $out['jobCategory'][$key]['parent'] = $jobcat->parent_category;
-            $out['jobCategory'][$key]['child'] = $jobcat->children_category;
+            $out['jobCategory'][$key]['child'] = $jobcat->child_category;
           }
         }
 
@@ -71,13 +71,19 @@ class ServiceController extends Controller
         return view('add_new_service', $out);
     }
 
+    public function validate_img(Request $request)
+    {
+      
+      return 0;
+    }
+
 
     public function find_service()
     {
         return view('find_service');
     }
 
-    public function  submit_job(Request $request)
+    public function submit_job(Request $request)
     {
       $user_id = Auth::user()->id;
 
@@ -92,6 +98,9 @@ class ServiceController extends Controller
       $new_job->days_to_deliver = $request->days;
       $new_job->image_path = $request->images;
       $new_job->url_link = $request->links;
+      $new_job->max = $request->max;
+      $new_job->email = $request->email;
+      $new_job->sms = $request->sms;
       $new_job->users = $user_id;
 
       if($new_job->save()){

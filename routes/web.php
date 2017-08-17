@@ -35,6 +35,7 @@ Route::get('/add-new-service', 'ServiceController@add_new_service');
 Route::get('/find-service', 'ServiceController@find_service');
 
 Route::post('/service/submit-job', 'ServiceController@submit_job');
+Route::post('/service/validate-img', 'ServiceController@validate_img');
 
 //others misc. controller
 Route::get('/settings', 'SettingController@index');
