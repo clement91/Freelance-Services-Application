@@ -73,7 +73,7 @@ class ServiceController extends Controller
 
     public function validate_img(Request $request)
     {
-      
+
       return 0;
     }
 
@@ -119,5 +119,20 @@ class ServiceController extends Controller
 
 
       return 0;
+    }
+
+    public function getUpload()
+    {
+        return view('find_service');
+    }
+
+    public function postUpload()
+    {
+        return view('find_service');
+    }
+
+    public function deleteUpload()
+    {
+        return view('find_service');
     }
 }

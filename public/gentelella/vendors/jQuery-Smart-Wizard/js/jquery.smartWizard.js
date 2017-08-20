@@ -65,6 +65,7 @@ function SmartWizard(target, options) {
         this.contentWidth = $this.elmStepContainer.width();
 
         $($this.buttons.next).click(function() {
+            updateConfirmPage();
             $('.thrsteps').removeClass('hide');
 
             $this.goForward();
@@ -120,6 +121,42 @@ function SmartWizard(target, options) {
             }
             return false;
         });
+
+        function updateConfirmPage()
+        {
+          //update confirmation page details
+          $('#confirm_job_title').text($('#job_title').val());
+          $('#confirm_job_desc').text($('#job_desc').val());
+
+          $('#confirm_job_category').text($('#job_category :selected').text());
+          $('#confirm_job_price').text($('#job_price').val());
+
+          $('#confirm_job_instruction').text($('#job_instruction').val());
+          $('#confirm_job_location').text($('#job_location :selected').text());
+
+          $('#confirm_job_days').text($('#job_days').val());
+          $('#confirm_job_imgs').text($('#job_imgs').val());
+
+          $('#confirm_job_links').text($('#job_links').val());
+          $('#confirm_max_jobs').text($('#max_jobs').val());
+
+          if ($('#chk-email').val() == 'Y') { var v = "Yes" } else { var v = "No" }
+          $('#confirm_chk-email').text(v);
+
+          if ($('#chk-sms').val() == 'Y') { var v = "Yes" } else { var v = "No" }
+          $('#confirm_chk-sms').text(v);
+
+          //$('#confirm_job_imgs').text($('#job_tags').val());
+          $('#confirm_job_tags').selectize({});
+          var v = $('#job_tags').val().split(',');
+          $.each( v, function( i, obj ){
+            $("#confirm_job_tags")[0].selectize.addOption({value: obj ,text: obj });
+            $("#confirm_job_tags")[0].selectize.addItem(obj);
+
+          });
+          $('#confirm_job_tags')[0].selectize.disable();
+
+        }
 
         $($this.steps).bind("click", function(e){
             if($this.steps.index(this) == $this.curStepIdx){

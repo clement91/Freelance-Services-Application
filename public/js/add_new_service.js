@@ -12,6 +12,7 @@ $(function () {
 
     //selectize
     $('#job_tags').selectize({
+        plugins: ['remove_button'],
         delimiter: ',',
         persist: false,
         create: function(input) {

@@ -16,9 +16,32 @@
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
             color: #fff;
       }
+      .selectize-control .selectize-input.disabled {
+          background: #FDFEFE;
+          border: none;
+          opacity: 1;
+          box-shadow: none;
+      }
+      .selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
+          background: #1b9dec;
+          border-radius: 3px;
+          text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+          color: #fff;
+      }
       .dropzone {
         min-height: 250px;
         border: 1px solid #e5e5e5;
+      }
+      .confirm_cls {
+        margin-top: 5px;
+        font-size: 16px;
+      }
+      .well {
+        background-color: #FDFEFE !important;
+      }
+      .stepContainer {
+        height: 100% !important;
       }
     </style>
 
@@ -108,7 +131,7 @@
                   <label class="control-label col-md-2 col-sm-2 col-xs-12" for="job_price">Price<span class="required">*</span>
                   </label>
                   <div class="col-md-2 col-sm-2 col-xs-12">
-                    <input type="number" id="job_price" name="job_price" required="required" class="form-control col-md-7 col-xs-12">
+                    <input type="number" id="job_price" name="job_price" required="required" placeholder="MYR" class="form-control col-md-7 col-xs-12">
                   </div>
                 </div>
 
@@ -163,8 +186,33 @@
                     <!--
                       <input type="text" id="job_imgs" name="job_imgs" required="required" class="form-control col-md-7 col-xs-12">
                       <form action="/service/validate-img" id="job_imgs" value="" class="dropzone"></form>
+
+                      <form action="/service/validate-img" id="my-awesome-dropzone" value="" class="dropzone">
+                          <div class="fallback">
+                            <input name="file" type="file" multiple />
+                          </div>
+                          <div class="uploadPro">
+                            <input id="pronumber" name="pronumber" class="form-control" size="1" />
+                          </div>
+                      </form>
                     -->
-                    <form action="/service/validate-img" id="job_imgs" value="" class="dropzone"></form>
+
+                    {!! Form::open(['url' => route('upload-post'), 'class' => 'dropzone', 'files'=>true, 'id'=>'real-dropzone']) !!}
+
+                      <div class="dz-message">
+
+                      </div>
+
+                      <div class="fallback">
+                          <input name="file" type="file" class="hide" multiple />
+                      </div>
+
+                      <div class="dropzone-previews" id="dropzonePreview"></div>
+
+                      <h4 style="text-align: center;color:#428bca;">Drop images in this area  <span class="glyphicon glyphicon-hand-down"></span></h4>
+
+                    {!! Form::close() !!}
+
                   </div>
                 </div>
 
@@ -174,7 +222,7 @@
                     <input type="text" id="job_links" name="job_links" required="required" placeholder="Facebook, Twitter, Instagram.." class="form-control col-md-7 col-xs-12">
                   </div>
                 </div>
-                
+
               </div>
 
             </div>
@@ -188,7 +236,14 @@
                         Maximum service able to<br/> process at same time
                       </label>
                       <div class="col-md-3">
-                        <input type="number" id="max_jobs" name="max_jobs" required="required" class="form-control col-md-7 col-xs-12">
+                        <!-- <input type="number" id="max_jobs" name="max_jobs" required="required" class="form-control col-md-7 col-xs-12"> -->
+                        <select id="max_jobs" name="max_jobs" class="selectpicker">
+                          <option value="1">1</option>
+                          <option value="1 - 5">1 - 5</option>
+                          <option value="6 - 10">6 - 10</option>
+                          <option value="10 - 20">10 - 20</option>
+                          <option value="More than 20 ..">More than 20 ..</option>
+                        </select>
                       </div>
                     </div>
                 </div>
@@ -196,7 +251,7 @@
                 <div class="row">
                     <div class="form-group">
                       <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:right">
-                        Received email when get<br/> respond from buyer?</label>
+                        Receive email when get<br/> respond from buyer?</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="checkbox" id="chk-email" value="Y" class="chk-chk" checked>
                       </div>
@@ -206,7 +261,7 @@
                 <div class="row">
                     <div class="form-group">
                       <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:right">
-                        Received sms when get<br/> respond from buyer?</label>
+                        Receive sms when get<br/> respond from buyer?</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="checkbox" id="chk-sms" value="Y" class="chk-chk" checked>
                       </div>
@@ -220,11 +275,104 @@
             <div id="step-3" class="thrsteps hide">
               <h2 class="StepTitle">Please confirm your service details</h2>
                   <div class="form-horizontal form-label-left">
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Title</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <span id="job_title" class="col-md-7 col-xs-12"></span>
-                        </div>
+                      <div class="well">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Title:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_title" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Description:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_desc" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <hr/>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Category:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_category" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Price:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_price" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Job Instruction:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_instruction" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Tags:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_tags" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Location:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_location" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Days to deliver:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_days" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <hr/>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Files/ Images:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_imgs" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Links:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_job_links" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <hr/>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Maximum service able to
+                                <br/>process at same time:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_max_jobs" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Received email:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_chk-email" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Received sms:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <span id="confirm_chk-sms" class="col-md-7 col-xs-12 confirm_cls"></span>
+                            </div>
+                          </div>
                       </div>
                   </div>
             </div>
@@ -236,6 +384,6 @@
       </div>
     </div>
 
-
+    {!! Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) !!}
 <!-- /page content -->
 @endsection
