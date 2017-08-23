@@ -439,6 +439,7 @@
 
     <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>
+    <script src="{{ asset('js/service.js') }}"></script>
     <script src="{{ asset('js/add_new_service.js') }}"></script>
 
 </body>

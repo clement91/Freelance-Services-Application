@@ -39,8 +39,21 @@ class ServiceController extends Controller
             $out['openJobs'][$key]['job_id'] = $job->job_id;
             $out['openJobs'][$key]['title'] = $job->title;
             $out['openJobs'][$key]['desc'] = $job->description;
+
+            $Year = $job->created_at->format('Y');
+            $Month = $job->created_at->format('M');
+            $Date = $job->created_at->format('d');
+
+            $out['openJobs'][$key]['date'] = $Date;
+            $out['openJobs'][$key]['month'] = $Month;
+            $out['openJobs'][$key]['year'] = $Year;
           }
         }
+        else
+        {
+          $out['openJobs'] = null;
+        }
+
         //return $out;
         return view('service', $out);
     }
@@ -80,46 +93,87 @@ class ServiceController extends Controller
 
     public function find_service()
     {
-        return view('find_service');
+        $out = [];
+
+        $out['jobCategory'] = JobCategory::All();
+        $out['location'] = Location::All();
+        
+        return view('find_service', $out);
     }
 
     public function submit_job(Request $request)
     {
       $user_id = Auth::user()->id;
 
-      $new_job = new Job;
-      $new_job->title = $request->title;
-      $new_job->description = $request->desc;
-      $new_job->category = $request->category;
-      $new_job->price = $request->price;
-      $new_job->instruction = $request->instruction;
-      $new_job->tags = $request->tags;
-      $new_job->location = $request->location;
-      $new_job->days_to_deliver = $request->days;
-      $new_job->image_path = $request->images;
-      $new_job->url_link = $request->links;
-      $new_job->max = $request->max;
-      $new_job->email = $request->email;
-      $new_job->sms = $request->sms;
-      $new_job->users = $user_id;
+      if($request->id != null)
+      {
+        $ujob = Job::where('id', $request->id);
+        $ujob->update([
+          'description' =>  $request->desc,
+          'category' =>  $request->category,
+          'price' =>  $request->price,
+          'instruction' =>  $request->instruction,
+          'tags' =>  $request->tags,
+          'location' =>  $request->location,
+          'days_to_deliver' =>  $request->days,
+          'image_path' =>  $request->images,
+          'url_link' =>  $request->links,
+          'max' =>  $request->max,
+          'email' =>  $request->email,
+          'sms' =>  $request->sms,
 
-      if($new_job->save()){
-        //get datetime & update job id
-        date_default_timezone_set('asia/singapore');
+        ]);
 
-        $date = date("Ymd");
-        //$time = date("His");
-
-        $job_id = $date .$new_job->id;
-        $Job = Job::where('id', $new_job->id);
-        $Job->update(['job_id' =>  $job_id ]);
-
-        return $job_id;
+        return $ujob->pluck('job_id');
       }
+      else
+      {
+        $new_job = new Job;
+        $new_job->title = $request->title;
+        $new_job->description = $request->desc;
+        $new_job->category = $request->category;
+        $new_job->price = $request->price;
+        $new_job->instruction = $request->instruction;
+        $new_job->tags = $request->tags;
+        $new_job->location = $request->location;
+        $new_job->days_to_deliver = $request->days;
+        $new_job->image_path = $request->images;
+        $new_job->url_link = $request->links;
+        $new_job->max = $request->max;
+        $new_job->email = $request->email;
+        $new_job->sms = $request->sms;
+        $new_job->users = $user_id;
 
+        if($new_job->save()){
+          //get datetime & update job id
+          date_default_timezone_set('asia/singapore');
+
+          $date = date("Ymd");
+          //$time = date("His");
+
+          $job_id = $date .$new_job->id;
+          $Job = Job::where('id', $new_job->id);
+          $Job->update(['job_id' =>  $job_id ]);
+
+          return $job_id;
+        }
+      }
 
       return 0;
     }
+
+    public function view_job(Request $request)
+    {
+        $out = [];
+
+        $out['job'] = Job::where('job_id', $request->id)->first();
+        $out['jobCategory'] = JobCategory::All();
+        $out['location'] = Location::All();
+
+        //return $out;
+        return view('view_service', $out);
+    }
+
 
     public function getUpload()
     {

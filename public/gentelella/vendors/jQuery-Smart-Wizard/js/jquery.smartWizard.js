@@ -92,6 +92,7 @@ function SmartWizard(target, options) {
                   //console.log("$('#job_title').val():" + $('#job_title').val());
 
                   $.post( "/service/submit-job", {
+                    "id" : null,
                     "title": $('#job_title').val(),
                     "desc": $('#job_desc').val(),
                     "category": $('#job_category').val(),
