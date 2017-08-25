@@ -45,9 +45,9 @@ $(function () {
 
     //update service
     $('#btn-update-service').on('click',function(e){
-      console.log($('#raw_id').attr('value') + ' - ' + $('#job_desc').val() + ' - ' + $('#job_category').val() + ' - ' + $('#job_price').val() + ' - ' + $('#job_instruction').val()
-        + ' - ' + $('#vjob_tags').val() + ' - ' + $('#job_location').val() + ' - ' + $('#job_days').val() + ' - ' + $('#job_links').val() + ' - ' + $('#max_jobs').val()
-        + ' - ' + $('#chk-email').val() + ' - ' + $('#chk-sms').val())
+      //console.log($('#raw_id').attr('value') + ' - ' + $('#job_desc').val() + ' - ' + $('#job_category').val() + ' - ' + $('#job_price').val() + ' - ' + $('#job_instruction').val()
+      //  + ' - ' + $('#vjob_tags').val() + ' - ' + $('#job_location').val() + ' - ' + $('#job_days').val() + ' - ' + $('#job_links').val() + ' - ' + $('#max_jobs').val()
+      //  + ' - ' + $('#chk-email').val() + ' - ' + $('#chk-sms').val())
       $.post( "/service/submit-job", {
         "id": $('#raw_id').attr('value'),
         "title": $('#job_title').val(),

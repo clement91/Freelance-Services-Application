@@ -97,7 +97,7 @@ class ServiceController extends Controller
 
         $out['jobCategory'] = JobCategory::All();
         $out['location'] = Location::All();
-        
+
         return view('find_service', $out);
     }
 
@@ -174,19 +174,36 @@ class ServiceController extends Controller
         return view('view_service', $out);
     }
 
+    public function find_job(Request $request)
+    {
+        $out = [];
+        $keyword = $request->keyword;
+        $price = $request->price;
+        $categories = $request->categories;
+        $location = $request->location;
+
+        $out['keyword'] = $keyword;
+        $out['price'] = $price;
+        $out['categories'] = $categories;
+        $out['location'] = $location;
+
+        return $out;
+        return view('view_service', $out);
+    }
+
 
     public function getUpload()
     {
-        return view('find_service');
+        return 0;
     }
 
     public function postUpload()
     {
-        return view('find_service');
+        return 0;
     }
 
     public function deleteUpload()
     {
-        return view('find_service');
+        return 0;
     }
 }

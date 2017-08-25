@@ -10,19 +10,22 @@
         margin-top: 22px;
         margin-left: 15px;
       }
+      .x-table {
+        height: 800px;
+      }
     </style>
     <h3>Find Service</h3>
     <div class="x_panel">
       <div class="x_content">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4 col-xs-12">
                   <label>Search:</label>
                   <input type="text" id="search_job" name="search_job" placeholder="Search by Term, Keywords" class="form-control col-md-7 col-xs-12">
             </div>
 
-            <div class="col-md-2">
-                <label>Categories:</label>
-                <select id="search_category" name="search_category" class="selectpicker">
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>Categories:</label><br/>
+                <select id="search_category" name="search_category" class="selectpicker" data-width="auto" multiple>
                   <?php $tmp = ''; ?>
                   @foreach($jobCategory as $jc)
                     @if($tmp != $jc->parent_category)
@@ -34,21 +37,21 @@
                 </select>
             </div>
 
-            <div class="col-md-2">
-                <label>Location:</label>
-                <select id="search_location" name="search_location" class="selectpicker">
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>Location:</label><br/>
+                <select id="search_location" name="search_location" class="selectpicker" data-width="auto" multiple>
                   @foreach($location as $loc)
                     <option value="{{ $loc->id }}">{{ $loc->location }}</option>
                   @endforeach
                 </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <label>Price:</label>
                 <input type="text" id="search_price" name="search_price" placeholder="MYR" class="form-control col-md-7 col-xs-12">
             </div>
 
-              <div class="col-md-2">
+              <div class="col-md-2 col-sm-2 col-xs-12">
                   <div class="cls-search">
                     <input type="button" class="btn btn-primary btn-md" id="btn-search-service" value="Search">
                     <input type="button" class="btn btn-warning btn-md" id="btn-search-clear" href="/service" value="Clear">
@@ -56,6 +59,18 @@
               </div>
           </div>
       </div>
+    </div>
+
+    <div class="x_panel x-table text-center">
+        <div class="onload-x-table">
+          <br/><br/><br/>
+          <h1>Can't find what you're looking for?</h1>
+          <h2>Click <b><a href="#">here</a></b> to request for a service that you need.</h2>
+        </div>
+
+        <div class="post-x-table">
+        </div>
+
     </div>
 <!-- /page content -->
 @endsection
