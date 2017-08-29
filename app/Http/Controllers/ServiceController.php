@@ -178,8 +178,8 @@ class ServiceController extends Controller
     {
         $out = [];
         $keyword = $request->keyword;
-        $price = $request->price;
         $categories = $request->categories;
+        $price = $request->price;
         $location = $request->location;
 
         $out['keyword'] = $keyword;
@@ -187,10 +187,20 @@ class ServiceController extends Controller
         $out['categories'] = $categories;
         $out['location'] = $location;
 
-        return $out;
-        return view('view_service', $out);
+        // keyword
+        $out['jobs'] = Job::search($keyword, null, true)->get();
+
+        //return $out;
+        return view('onload_service', $out);
     }
 
+    public function onload_job()
+    {
+      $out = [];
+      $out['jobs'] = Job::All();
+
+      return view('onload_service', $out);
+    }
 
     public function getUpload()
     {

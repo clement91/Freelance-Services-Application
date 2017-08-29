@@ -20,7 +20,10 @@
           <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
                   <label>Search:</label>
+                  <!--
                   <input type="text" id="search_job" name="search_job" placeholder="Search by Term, Keywords" class="form-control col-md-7 col-xs-12">
+                  -->
+                  <input class="form-control col-md-7 col-xs-12" id="search_job" name="search_job" placeholder="Search by Term, Keywords" />
             </div>
 
             <div class="col-md-2 col-sm-2 col-xs-12">
@@ -68,7 +71,10 @@
           <h2>Click <b><a href="#">here</a></b> to request for a service that you need.</h2>
         </div>
 
-        <div class="post-x-table">
+        <br/>
+
+        <div class="hide post-x-table">
+
         </div>
 
     </div>

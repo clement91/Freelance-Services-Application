@@ -64,6 +64,10 @@ class ComposerStaticInit412aa85be3f29f952590dba118118780
             'Psr\\Http\\Message\\' => 17,
             'PhpParser\\' => 10,
         ),
+        'N' => 
+        array (
+            'Nicolaslopezj\\Searchable\\' => 25,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
@@ -199,6 +203,10 @@ class ComposerStaticInit412aa85be3f29f952590dba118118780
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Nicolaslopezj\\Searchable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nicolaslopezj/searchable/src',
         ),
         'Monolog\\' => 
         array (
@@ -336,6 +344,9 @@ class ComposerStaticInit412aa85be3f29f952590dba118118780
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'CreateJobCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_054921_create_job_categories_table.php',
+        'CreateJobPrivateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_29_064150_create_job_private_comments_table.php',
+        'CreateJobPublicCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_29_064204_create_job_public_comments_table.php',
+        'CreateJobTransactionsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_29_064132_create_job_transactions_table.php',
         'CreateJobsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_051954_create_jobs_table.php',
         'CreateLocationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_054834_create_locations_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
@@ -1952,6 +1963,7 @@ class ComposerStaticInit412aa85be3f29f952590dba118118780
         'Monolog\\Processor\\UidProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
+        'Nicolaslopezj\\Searchable\\SearchableTrait' => __DIR__ . '/..' . '/nicolaslopezj/searchable/src/SearchableTrait.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',

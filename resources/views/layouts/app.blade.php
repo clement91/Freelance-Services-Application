@@ -436,6 +436,7 @@
     <script src="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.js') }}"></script>
     <script src="{{ asset('vendors/selectize.js-master/dist/js/standalone/selectize.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-switch-master/dist/js/bootstrap-switch.js') }}"></script>
+    <script src="{{ asset('vendors/list.js/dist/list.js') }}"></script>
 
     <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>

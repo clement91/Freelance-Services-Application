@@ -36,6 +36,7 @@ Route::get('/find-service', 'ServiceController@find_service');
 
 Route::post('/service/submit-job', 'ServiceController@submit_job');
 Route::post('/service/view-job', 'ServiceController@view_job');
+Route::get('/service/onload-job', 'ServiceController@onload_job');
 Route::post('/service/find-job', 'ServiceController@find_job');
 Route::post('/service/validate-img', 'ServiceController@validate_img');
 
