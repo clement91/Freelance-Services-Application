@@ -104,7 +104,7 @@
                             <li><a href="/add-new-service">Add New Service</a></li>
                             <li><a href="/service">View & Edit Service</a></li>
                             <li><a href="/find-service">Find a Service</a></li>
-                            <li><a href="/find-service">Post a Service</a></li>
+                            <li><a href="/post-service">Post a Service</a></li>
                           </ul>
                         </li>
                         <li><a><i class="fa fa-gears"></i> Others <span class="fa fa-chevron-down"></span></a>
@@ -443,6 +443,7 @@
     <script src="{{ asset('js/service.js') }}"></script>
     <script src="{{ asset('js/add_new_service.js') }}"></script>
     <script src="{{ asset('js/find_service.js') }}"></script>
+    <script src="{{ asset('js/post_service.js') }}"></script>
 
 </body>
 </html>

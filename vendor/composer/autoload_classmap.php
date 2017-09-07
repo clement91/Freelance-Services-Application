@@ -49,6 +49,7 @@ return array(
     'CreateJobCategoriesTable' => $baseDir . '/database/migrations/2017_06_25_054921_create_job_categories_table.php',
     'CreateJobPrivateCommentsTable' => $baseDir . '/database/migrations/2017_08_29_064150_create_job_private_comments_table.php',
     'CreateJobPublicCommentsTable' => $baseDir . '/database/migrations/2017_08_29_064204_create_job_public_comments_table.php',
+    'CreateJobSuggestTable' => $baseDir . '/database/migrations/2017_09_06_135536_create_job_suggest_table.php',
     'CreateJobTransactionsTable' => $baseDir . '/database/migrations/2017_08_29_064132_create_job_transactions_table.php',
     'CreateJobsTable' => $baseDir . '/database/migrations/2017_06_25_051954_create_jobs_table.php',
     'CreateLocationsTable' => $baseDir . '/database/migrations/2017_06_25_054834_create_locations_table.php',

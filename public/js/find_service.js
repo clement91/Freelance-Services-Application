@@ -16,10 +16,18 @@ $(function () {
     //search service
     $('#btn-search-service').on('click',function(e){
       var keyword = $('#search_job').val();
-      var price = $('#search_job').val();
       var categories = $('button[data-id=search_category]').attr('title');
       var location = $('button[data-id=search_location]').attr('title');
+      var p = $('button[data-id=search_price]').attr('title');
 
+      if(p != "Nothing selected")
+      {
+        var price = $('#search_price option[data-text="' + $('button[data-id=search_price]').attr('title') + '"]').attr('value');
+      }
+      else
+      {
+        var price = "";
+      }
 
       $.post( "/service/find-job", {
         "keyword": keyword,

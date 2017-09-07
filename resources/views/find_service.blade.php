@@ -28,8 +28,9 @@
 
             <div class="col-md-2 col-sm-2 col-xs-12">
                 <label>Categories:</label><br/>
-                <select id="search_category" name="search_category" class="selectpicker" data-width="auto" multiple>
+                <select id="search_category" name="search_category" class="selectpicker" data-width="200px" multiple>
                   <?php $tmp = ''; ?>
+                  <option value=""></option>
                   @foreach($jobCategory as $jc)
                     @if($tmp != $jc->parent_category)
                       <optgroup label="{{ $jc->parent_category }}">
@@ -42,16 +43,25 @@
 
             <div class="col-md-2 col-sm-2 col-xs-12">
                 <label>Location:</label><br/>
-                <select id="search_location" name="search_location" class="selectpicker" data-width="auto" multiple>
+                <select id="search_location" name="search_location" class="selectpicker" data-width="200px" multiple>
                   @foreach($location as $loc)
-                    <option value="{{ $loc->id }}">{{ $loc->location }}</option>
+                    <option value="{{ $loc->id }}" selected>{{ $loc->location }}</option>
                   @endforeach
                 </select>
             </div>
 
             <div class="col-md-2 col-sm-2 col-xs-12">
-                <label>Price:</label>
+                <label>Price:</label><br/>
+                <!--
                 <input type="text" id="search_price" name="search_price" placeholder="MYR" class="form-control col-md-7 col-xs-12">
+              -->
+              <select id="search_price" name="search_price" class="selectpicker" data-width="200px">
+                <option value=""></option>
+                <option value="0-500" data-text="0 - 500">0 - 500</option>
+                <option value="500-1000" data-text="500 - 1000">500 - 1000</option>
+                <option value="1000-3000" data-text="1000 - 3000">1000 - 3000</option>
+                <option value="3000-99999" data-text="3000 & Above">3000 & Above</option>
+              </select>
             </div>
 
               <div class="col-md-2 col-sm-2 col-xs-12">
@@ -68,12 +78,16 @@
         <div class="onload-x-table">
           <br/><br/><br/>
           <h1>Can't find what you're looking for?</h1>
-          <h2>Click <b><a href="#">here</a></b> to request for a service that you need.</h2>
+          <h2>Click <b><a href="/post-service">here</a></b> to request for a service that you need.</h2>
         </div>
 
         <br/>
 
         <div class="hide post-x-table">
+
+        </div>
+
+        <div class="hide post-xc-table">
 
         </div>
 

@@ -177,19 +177,23 @@ class ServiceController extends Controller
     public function find_job(Request $request)
     {
         $out = [];
-        $keyword = $request->keyword;
-        $categories = $request->categories;
-        $price = $request->price;
-        $location = $request->location;
 
-        $out['keyword'] = $keyword;
-        $out['price'] = $price;
-        $out['categories'] = $categories;
-        $out['location'] = $location;
+        $keyword = $request->keyword;
+        $location = explode(",", str_replace(' ', '', $request->location));
+
+        if ($request->categories != "Nothing selected") { $categories = str_replace(", ", " ", $request->categories); } else { $categories = ""; }
+        if ($request->price != "") { $price = explode("-", $request->price); } else { $price = explode("-", "0-99999"); }
+
+        $keyword .= $categories;
+        $location_ids = Location::whereIn('location' , $location)
+                        ->pluck('id')
+                        ->all();
 
         // keyword
-        $out['jobs'] = Job::search($keyword, null, true)->get();
-
+        $out['jobs'] = Job::search($keyword, null, true)
+                        ->whereBetween('price', $price)
+                        ->whereIn('location', $location_ids)
+                        ->get();
         //return $out;
         return view('onload_service', $out);
     }
@@ -200,6 +204,15 @@ class ServiceController extends Controller
       $out['jobs'] = Job::All();
 
       return view('onload_service', $out);
+    }
+
+    public function view_profile(Request $request)
+    {
+      $out = [];
+
+      $out['job'] = Job::where('job_id', $request->id)->first();
+
+      return view('profile_service', $out);
     }
 
     public function getUpload()

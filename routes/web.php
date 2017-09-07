@@ -33,12 +33,18 @@ Route::get('/inbox', 'InboxController@index');
 Route::get('/service', 'ServiceController@index');
 Route::get('/add-new-service', 'ServiceController@add_new_service');
 Route::get('/find-service', 'ServiceController@find_service');
+Route::get('/service/onload-job', 'ServiceController@onload_job');
 
 Route::post('/service/submit-job', 'ServiceController@submit_job');
 Route::post('/service/view-job', 'ServiceController@view_job');
-Route::get('/service/onload-job', 'ServiceController@onload_job');
 Route::post('/service/find-job', 'ServiceController@find_job');
 Route::post('/service/validate-img', 'ServiceController@validate_img');
+Route::post('/service/view-profile', 'ServiceController@view_profile');
+
+//jobsuggest controller
+Route::get('/post-service', 'JobSuggestController@index');
+Route::post('/post-service/suggest-job', 'JobSuggestController@add_suggest_job');
+
 
 //others misc. controller
 Route::get('/settings', 'SettingController@index');

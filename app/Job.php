@@ -23,26 +23,26 @@ class Job extends \Eloquent
        * @var array
        */
       'columns' => [
-          //'users.first_name' => 10,
-          //'users.last_name' => 10,
-          //'users.bio' => 2,
-          //'users.email' => 5,
-          //'posts.title' => 2,
-          //'posts.body' => 1,
+
           'jobs.title' => 10,
           'jobs.description' => 10,
           'jobs.tags' => 10,
+          'job_categories.parent_category' => 10,
+          'job_categories.child_category' => 10,
           'jobs.instruction' => 5,
           'jobs.url_link' => 2,
+
       ],
-      //'joins' => [
-      //    'posts' => ['users.id','posts.user_id'],
-      //],
+
+      'joins' => [
+          'job_categories' => ['jobs.category','job_categories.id'],
+      ],
+
   ];
 
-  //public function posts()
-  //{
-  //    return $this->hasMany('Post');
-  //}
+  public function job_categories()
+  {
+      return $this->hasMany('job_categories');
+  }
 
 }
