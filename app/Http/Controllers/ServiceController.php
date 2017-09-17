@@ -7,6 +7,7 @@ use App\User;
 use App\Job;
 use App\JobCategory;
 use App\Location;
+use App\JobPublicComment;
 use Illuminate\Http\Request;
 
 
@@ -193,7 +194,14 @@ class ServiceController extends Controller
         $out['jobs'] = Job::search($keyword, null, true)
                         ->whereBetween('price', $price)
                         ->whereIn('location', $location_ids)
+                        ->with('xusers')
+                        ->with('xcategory')
+                        ->with('xlocation')
+                        ->with('xpubComments')
                         ->get();
+
+        $out['users'] = User::all();
+
         //return $out;
         return view('onload_service', $out);
     }
@@ -210,8 +218,38 @@ class ServiceController extends Controller
     {
       $out = [];
 
-      $out['job'] = Job::where('job_id', $request->id)->first();
+      $job_f = Job::where('id', $request->id)->first();
+      $user_id = $job_f->users;
 
+      $user_f = User::where('id', $user_id)->first();
+      $cat_f = JobCategory::where('id', $job_f->category)->first();
+      $location_f = Location::where('id', $job_f->location)->first();
+
+      $out['comment_pub'] = JobPublicComment::where('job_transaction_id', $job_f->job_id)
+                              ->with('xusers')
+                              ->orderBy('created_at', 'desc')
+                              ->get();
+
+      $out['job'] = [
+        'name' => $user_f->name,
+        'email' => $user_f->email,
+        'image_url' => $user_f->image_url,
+        'job_id' => $job_f->job_id,
+        'title' => $job_f->title,
+        'desc' => $job_f->description,
+        'parent_category' => $cat_f->parent_category,
+        'child_category' => $cat_f->child_category,
+        'price' => $job_f->price,
+        'instruction' => $job_f->instruction,
+        'tags' => $job_f->tags,
+        'location' => $location_f->location,
+        'url_link' => $job_f->url_link,
+        'hyperlink' => 'http://'. $job_f->url_link,
+        'max_job' => $job_f->max,
+        'user' => $user_id,
+      ];
+
+      //return $out;
       return view('profile_service', $out);
     }
 

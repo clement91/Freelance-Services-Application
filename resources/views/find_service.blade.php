@@ -15,7 +15,7 @@
       }
     </style>
     <h3>Find Service</h3>
-    <div class="x_panel">
+    <div class="x_panel find_service_x">
       <div class="x_content">
           <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">

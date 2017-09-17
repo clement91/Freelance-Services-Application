@@ -1,42 +1,90 @@
 <!-- page content -->
     <style>
-
+      .profile_service-txt-left {
+            text-align: left;
+            height: 600px;
+      }
+      .well {
+        background-color: #FDFEFE !important;
+      }
+      .control-label {
+        text-align: right;
+        font-size: 15px;
+      }
+      .control-span {
+        text-align: left;
+        font-size: 15px;
+      }
+      .row {
+        padding-bottom: 10px;
+      }
+      .selectize-control.multi .selectize-input > div {
+            background: #1b9dec;
+            border-radius: 3px;
+            text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+            color: #fff;
+      }
+      .selectize-control .selectize-input.disabled {
+          background: #FDFEFE;
+          border: none;
+          opacity: 1;
+          box-shadow: none;
+      }
+      .selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
+          background: #1b9dec;
+          border-radius: 3px;
+          text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+          color: #fff;
+      }
+      #txt-new-comment-ps {
+        resize: none;
+        height: 90px;
+      }
+      .ps-cls-rate {
+            padding-top: 5px;
+      }
     </style>
     <div class="mxcg">
         <div class="row rofile-info">
               <div class="col-md-12 col-sm-12 col-xs-12">
 
                   <div class="x_title">
-                    <h2>User Report <small>Activity report</small></h2>
-                    <input type="button" class="btn btn-success btn-md pull-right" id="btn-profile-service-back" value="Back">
-                    <input type="button" class="btn btn-primary btn-md pull-right" id="btn-profile-service-request" value="Request Service">
+                    <h2>User Profile <small>{{ $job['job_id'] }}</small></h2>
+                    <button type="button" class="btn btn-success btn-md pull-right" id="btn-profile-service-back" value="Back">
+                      Back
+                    </button>
+                    <button type="button" class="btn btn-primary btn-md pull-right" id="btn-profile-service-request" value="Request Service">
+                      <i class="fa fa-edit m-right-xs"></i> Request Service
+                    </button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="img/profile/1-044043.jpg" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{ $job['image_url'] }}" alt="Avatar" title="Profile Picture">
                         </div>
                       </div>
-                      <h3>Samuel Doe</h3>
+                      <h3>{{ $job['name'] }}</h3>
 
                       <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                        <li><i class="fa fa-map-marker user-profile-icon"></i> {{ $job['location'] }}
                         </li>
-
+                        <!--
                         <li>
                           <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
                         </li>
-
+                        -->
                         <li class="m-top-xs">
                           <i class="fa fa-external-link user-profile-icon"></i>
-                          <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
+                          <a href="{{ $job['hyperlink'] }}" target="_blank">{{ $job['url_link'] }}</a>
                         </li>
                       </ul>
 
-                      <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                      <a class="btn btn-success"><i class="fa fa-envelope m-right-xs"></i> Message Me</a>
                       <br />
 
                       <!-- start skills -->
@@ -72,6 +120,7 @@
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
 
+                      <!--
                       <div class="profile_title">
                         <div class="col-md-6">
                           <h2>User Activity Report</h2>
@@ -83,95 +132,130 @@
                           </div>
                         </div>
                       </div>
-                      <!-- start of user-activity-graph -->
-                      <div id="graph_bar" style="width:100%; height:280px;"></div>
-                      <!-- end of user-activity-graph -->
+                      -->
+
 
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent Activity</a>
+                          <li role="presentation" class="active"><a href="#tab_content1" id="profile-service-tab-1" role="tab" data-toggle="tab" aria-expanded="true">Job Details</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Projects Worked on</a>
+                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-service-tab-2" data-toggle="tab" aria-expanded="false">Comments</a>
                           </li>
-                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
+                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-service-tab-3" data-toggle="tab" aria-expanded="false">Projects Current Work on</a>
                           </li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                           <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                            <div class="well">
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Description:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['desc'] }}</span>
+                                    </div>
+                                  </div>
+                                </div>
 
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Price:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['price'] }}</span>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Category:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['parent_category'] }}, {{ $job['child_category'] }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tags:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <span class="col-md-12 col-xs-12 control-span" id="profile_service_tabx_tags">{{ $job['tags'] }}</span>
+                                      <input class="hide" id="profile_service_tabv_tags" value="{{ $job['tags'] }}"/>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Instruction to buyer:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['instruction'] }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </div>
+
+                          </div>
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                             <!-- start recent activity -->
-                            <ul class="messages">
+                            <ul class="messages profile_service-txt-left">
                               <li>
-                                <img src="img/profile/1-044043.jpg" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
+                                <div class="pull-right">
+                                  <a href="#" class="btn btn-sm btn-primary" id="btn-add-comment-ps">Add Comment</a>
                                 </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">Desmond Davison</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                <textarea data-jobid="{{ $job['job_id'] }}" data-user="{{ $job['user'] }}" id="txt-new-comment-ps"
+                                  placeholder="Add your comment here.." class="form-control"></textarea>
+                                <div class="ps-cls-rate pull-right">
+                                  <p class="ratings">
+                                    <i>Give a rating  </i>
+                                    <span id="ps-label-rate" value="0"></span>
+                                    <a href="#"><span data-index="0" id="ps-fa-0" class="ps-fa fa fa-star-o"></span></a>
+                                    <a href="#"><span data-index="1" id="ps-fa-1" class="ps-fa fa fa-star-o"></span></a>
+                                    <a href="#"><span data-index="2" id="ps-fa-2" class="ps-fa fa fa-star-o"></span></a>
+                                    <a href="#"><span data-index="3" id="ps-fa-3" class="ps-fa fa fa-star-o"></span></a>
+                                    <a href="#"><span data-index="4" id="ps-fa-4" class="ps-fa fa fa-star-o"></span></a>
                                   </p>
                                 </div>
+                                <br/><br/>
                               </li>
-                              <li>
-                                <img src="img/profile/1-044043.jpg" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">Brian Michaels</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="img/profile/1-044043.jpg" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">Desmond Davison</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="img/profile/1-044043.jpg" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">Brian Michaels</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
+                              <div class="ps-comment-list">
+                                @foreach($comment_pub as $comment)
+                                  <li>
+                                    <img src="{{ $comment->xusers->image_url }}" class="avatar" alt="Avatar">
+                                    <div class="message_date">
+                                      <h3 class="date text-info">24</h3>
+                                      <p class="month">May</p>
+                                    </div>
+                                    <div class="message_wrapper">
+                                      <h4 class="heading">{{ $comment->xusers->name }}</h4>
+                                      <blockquote class="message">{{ $comment->msg }}</blockquote>
+                                      <br />
+                                      <p class="ratings">
+                                        @if($comment->rating != 0)
+                                            <a>{{ $comment->rating }}.0</a>
+
+                                            <?php $rate = $comment->rating; ?>
+                                            @for($i = 0; $i < 5; $i++)
+                                              @if($i < $rate)
+                                                <a href="#"><span class="fa fa-star"></span></a>
+                                              @else
+                                                <a href="#"><span class="fa fa-star-o"></span></a>
+                                              @endif
+                                            @endfor
+                                        @else
+                                          N.A
+                                        @endif
+                                      </p>
+                                    </div>
+                                  </li>
+                                @endforeach
+                              </div>
 
                             </ul>
                             <!-- end recent activity -->
 
                           </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-
+                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                             <!-- start user projects -->
                             <table class="data table table-striped no-margin">
                               <thead>
@@ -231,11 +315,6 @@
                               </tbody>
                             </table>
                             <!-- end user projects -->
-
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                              photo booth letterpress, commodo enim craft beer mlkshk </p>
                           </div>
                         </div>
                       </div>

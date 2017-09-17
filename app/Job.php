@@ -45,4 +45,34 @@ class Job extends \Eloquent
       return $this->hasMany('job_categories');
   }
 
+  public function xusers()
+  {
+      return $this->hasOne('App\User', 'id', 'users');
+  }
+
+  public function xcategory()
+  {
+      return $this->hasOne('App\JobCategory', 'id', 'category');
+  }
+
+  public function xlocation()
+  {
+      return $this->hasOne('App\Location', 'id', 'location');
+  }
+
+  public function xpubComments()
+  {
+      return $this->hasMany('App\JobPublicComment', 'job_transaction_id', 'job_id');
+      /*
+      return $this->hasManyThrough(
+            'App\JobPublicComment', //posts table
+            'App\User',
+            'name', // Foreign key on users table...
+            'users', // Foreign key on posts table...
+            'job_id', // Local key on countries table...
+            'id' // Local key on users table...
+        );
+      */
+    }
+
 }

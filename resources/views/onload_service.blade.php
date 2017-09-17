@@ -1,4 +1,8 @@
 <!-- page content -->
+    <?php
+        if(!isset($xpubComments)) { $xpubComments = null; }
+        if(!isset($users)) { $users = null; }
+     ?>
     <style>
       .mxg {
         text-align: left;
@@ -28,6 +32,26 @@
       .name {
         font-weight: bold;
       }
+      .selectize-control.multi .selectize-input > div {
+            background: #1b9dec;
+            border-radius: 3px;
+            text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+            color: #fff;
+      }
+      .selectize-control .selectize-input.disabled {
+          background: #FDFEFE;
+          border: none;
+          opacity: 1;
+          box-shadow: none;
+      }
+      .selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
+          background: #1b9dec;
+          border-radius: 3px;
+          text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+          color: #fff;
+      }
     </style>
     <div class="mxg">
         @foreach($jobs as $job)
@@ -36,63 +60,47 @@
               <div class="col-sm-12">
                 <h4 class="heading">{{ $job->title }}</h4>
                 <div class="left col-xs-1">
-                  <img src="img/profile/1-044043.jpg" class="avatar" alt="Avatar">
+                  <img src="{{ $job->xusers->image_url }}" class="avatar" alt="Avatar">
                 </div>
                 <div class="left col-xs-11">
-                  <h4>Nicole Pearson</h4>
-                  <p><strong>Description: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>
-                  <ul class="list-unstyled">
-                    <li><i class="fa fa-building"></i> Location: </li>
-                    <li><i class="fa fa-tag"></i> Keywords: </li>
-                    <li><a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a> </li>
-                  </ul>
+                  <h4>{{ $job->xusers->name }}</h4>
+                  <p><strong>Description: </strong> {{ $job->description }} </p>
+                  <p><strong>Location: </strong> {{ $job->xlocation->location }} </p>
+                  <p><strong>Category: </strong> {{ $job->xcategory->parent_category }}, {{ $job->xcategory->child_category }} </p>
+                  <p><strong>Keywords: </strong><span id="onload_service_tagx">{{ $job->tags }}</span> </p>
+                  <input class="hide" id="onload_service_tagv" value="{{ $job->tags }}"/>
                 </div>
 
                 <div class="left col-xs-12">
-                  Testimonal:
+                  Comments:
                   <ul class="messages">
                     <li></li>
 
-                    <li>
-                        <div class="message_date">
-                          <h3 class="date text-info">17</h3>
-                          <p class="month">June</p>
-                        </div>
-                        <div class="message_wrapper">
-                          <blockquote class="message">Great art work!</blockquote>
-                          <br />
-                          <p class="name">
-                            Josh Mark
-                          </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="message_date">
-                          <h3 class="date text-info">24</h3>
-                          <p class="month">May</p>
-                        </div>
-                        <div class="message_wrapper">
-                          <blockquote class="message">Good service</blockquote>
-                          <br />
-                          <p class="name">
-                            Dave Tan
-                          </p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="message_date">
-                          <h3 class="date text-info">24</h3>
-                          <p class="month">May</p>
-                        </div>
-                        <div class="message_wrapper">
-                          <blockquote class="message">Good Job!! Hope to work with you again<br/>Tqvm</blockquote>
-                          <br />
-                          <p class="name">
-                            Dave Tan
-                          </p>
-                        </div>
-                    </li>
+                    @if($job->xpubComments->count() != 0)
+                      @foreach($job->xpubComments as $comment)
+                        <li>
+                            <div class="message_date">
+                              <h3 class="date text-info">17</h3>
+                              <p class="month">June</p>
+                            </div>
+                            <div class="message_wrapper">
+                              <blockquote class="message">{{ $comment->msg }}</blockquote>
+                              <br />
+                              <p class="name">
+                                @if($users != null)
+                                  @foreach($users as $user)
+                                    @if($user->id == $comment->users)
+                                      {{ $user->name }}
+                                    @endif
+                                  @endforeach
+                                 @endif
+                              </p>
+                            </div>
+                        </li>
+                      @endforeach
+                    @else
+                      <li style="font-style:italic">&nbsp;No Comment add this moment</li>
+                    @endif
 
                   </ul>
                 </div>
