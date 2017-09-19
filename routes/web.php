@@ -29,6 +29,7 @@ Route::post('/profile/validate-img', 'ProfileController@validate_img');
 //inbox controller
 Route::get('/inbox', 'InboxController@index');
 Route::post('/inbox/add-public-comment', 'InboxController@add_comment_pub');
+Route::post('/inbox/send-ps-msg', 'InboxController@send_ps_msg');
 
 //service controller
 Route::get('/service', 'ServiceController@index');
@@ -41,6 +42,9 @@ Route::post('/service/view-job', 'ServiceController@view_job');
 Route::post('/service/find-job', 'ServiceController@find_job');
 Route::post('/service/validate-img', 'ServiceController@validate_img');
 Route::post('/service/view-profile', 'ServiceController@view_profile');
+Route::post('/service/request-job', 'ServiceController@request_job');
+Route::post('/service/accept-job', 'ServiceController@accept_job');
+Route::post('/service/reject-job', 'ServiceController@reject_job');
 
 //jobsuggest controller
 Route::get('/post-service', 'JobSuggestController@index');

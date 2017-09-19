@@ -20,7 +20,7 @@ $(function () {
 
     $('.btn-view-profile').on('click',function(e){
       var id = $(this).attr('data-id');
-      $.post( "/service/view-profile", { "id": id, }, function(rx) {
+      $.post( "/service/view-profile", { "id": id, 'view': 0 }, function(rx) {
         $('.post-xc-table').html(rx);
         $('.post-x-table').addClass('hide');
         $('.find_service_x').addClass('hide');

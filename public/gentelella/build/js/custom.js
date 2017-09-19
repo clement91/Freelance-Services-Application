@@ -1841,7 +1841,7 @@ if (typeof NProgress != 'undefined') {
 
 			if( typeof (PNotify) === 'undefined'){ return; }
 			//console.log('init_PNotify');
-
+      /*
 			new PNotify({
 			  title: "PNotify",
 			  type: "info",
@@ -1863,7 +1863,7 @@ if (typeof NProgress != 'undefined') {
 				return false;
 			  }
 			});
-
+      */
 		};
 
 

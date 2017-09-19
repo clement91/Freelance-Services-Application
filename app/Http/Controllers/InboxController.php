@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Job;
+use App\Inboxe;
 use App\JobPublicComment;
 use App\User;
 use Illuminate\Http\Request;
@@ -48,4 +50,24 @@ class InboxController extends Controller
 
         return view('comment_list', $out);
     }
+
+    public function send_ps_msg(Request $request)
+    {
+
+      $job_f = Job::where('job_id', $request->job_id)->first();
+
+      $new_inb = new Inboxe;
+      $new_inb->job_id = $request->job_id;
+      $new_inb->read_type = 0; // unread
+      $new_inb->inbox_type = 0; // public
+      $new_inb->msg = $request->msg;
+      $new_inb->priority = 0; // 'not important
+      $new_inb->job_owner = $job_f->users;
+      $new_inb->user = $request->user;
+
+      $new_inb->save();
+
+      return 0;
+    }
+
 }

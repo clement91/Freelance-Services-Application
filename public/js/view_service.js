@@ -39,6 +39,7 @@ $(function () {
 
     //cancel
     $('#btn-update-cancel').on('click',function(e){
+      console.log("Hello cancel")
       var href = $(this).attr('href');
       location.href = href;
     });

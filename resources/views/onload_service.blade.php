@@ -99,7 +99,7 @@
                         </li>
                       @endforeach
                     @else
-                      <li style="font-style:italic">&nbsp;No Comment add this moment</li>
+                      <li style="font-style:italic">&nbsp;No comment at this moment</li>
                     @endif
 
                   </ul>
@@ -118,7 +118,7 @@
                   </p>
                 </div>
                 <div class="col-xs-12 col-sm-6 emphasis emphasis-right">
-                  <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
+                  <button type="button" class="btn btn-warning btn-xs"> <i class="fa fa-user">
                     </i> <i class="fa fa-comments-o"></i> </button>
                   <button type="button" data-id="{{ $job->id }}" class="btn-view-profile btn btn-primary btn-xs">
                     <i class="fa fa-user"> </i> View Profile

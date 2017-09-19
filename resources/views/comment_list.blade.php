@@ -22,7 +22,7 @@
           @endfor
       @else
         N.A
-      Endif
+      @endif
     </p>
   </div>
 </li>

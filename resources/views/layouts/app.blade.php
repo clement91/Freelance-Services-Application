@@ -27,9 +27,15 @@
     <!-- bootstrap-daterangepicker -->
     <link href="../gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="../gentelella/vendors/dropzone/dist/dropzone.css" rel="stylesheet">
+    <link href="../gentelella/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <link href="../gentelella/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../gentelella/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../gentelella/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- PNotify -->
+    <link href="../gentelella/vendors/pnotify/dist/pnotify.custom.min.css" rel="stylesheet">
 
     <!-- Vendors -->
     <link href="{{ asset('vendors/BootstrapFormHelpers/dist/css/bootstrap-formhelpers.css') }}" rel="stylesheet">
@@ -173,16 +179,16 @@
                         <ul class="dropdown-menu dropdown-usermenu pull-right">
                           <li><a href="/profile"> Profile</a></li>
                           <li>
-                            <a href="javascript:;">
-                              <span class="badge bg-red pull-right">50%</span>
+                            <a href="/settings">
+                              {{-- <span class="badge bg-red pull-right">50%</span> --}}
                               <span>Settings</span>
                             </a>
                           </li>
-                          <li><a href="javascript:;">Help</a></li>
+                          <li><a href="/help">Help</a></li>
                           <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                         </ul>
                       </li>
-
+                      {{--
                       <li role="presentation" class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                           <i class="fa fa-bell-o"></i>
@@ -265,7 +271,7 @@
                           </li>
                         </ul>
                       </li>
-
+                      --}}
                     </ul>
                   @endif
 
@@ -425,6 +431,10 @@
     <!-- bootstrap-daterangepicker -->
     <script src="../gentelella/vendors/moment/min/moment.min.js"></script>
     <script src="../gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="../gentelella/vendors/google-code-prettify/src/prettify.js"></script>
+    <script src="../gentelella/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="../gentelella/vendors/bootstrap-wysiwyg/js/jquery.hotkeys.js"></script>
+    <script src="../gentelella/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
     <script src="{{ asset('vendors/dropzone/dropzone.js') }}"></script>
 
     <!-- Custom Theme Scripts -->
@@ -437,6 +447,9 @@
     <script src="{{ asset('vendors/selectize.js-master/dist/js/standalone/selectize.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-switch-master/dist/js/bootstrap-switch.js') }}"></script>
     <script src="{{ asset('vendors/list.js/dist/list.js') }}"></script>
+
+    <!-- PNotify -->
+    <script src="../gentelella/vendors/pnotify/dist/pnotify.custom.min.js"></script>
 
     <!-- Custom js files -->
     <script src="{{ asset('js/profile.js') }}"></script>

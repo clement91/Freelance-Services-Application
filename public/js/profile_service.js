@@ -29,10 +29,16 @@ $(function () {
     });
 
     //revert
-    $('#btn-profile-service-back').on('click',function(e){
+    $('#btn-profile-service-back-0').on('click',function(e){
       $('.post-x-table').removeClass('hide');
       $('.find_service_x').removeClass('hide');
       $('.post-xc-table').addClass('hide');
+
+    });
+
+    $('#btn-profile-service-back-1').on('click',function(e){
+      $('.service-main-view').removeClass('hide');
+      $('.service-profile-view').addClass('hide');
 
     });
 
@@ -88,6 +94,71 @@ $(function () {
     $('.ps-fa').on('click ',function(e){
       var value = $(this).attr('data-index');
       $('#ps-label-rate').attr('value', parseInt(value) + 1);
+    });
+
+    //new message 'compose
+    $('#editor').wysiwyg();
+    //$('#editor').cleanHtml();
+    $('.compose-public, .compose-close').on('click ',function(e){
+      $('.compose').slideToggle();
+    });
+    $('#editor').wysiwyg().on('change', function(){
+    	//console.log('something has been changed on the editor');
+    });
+
+    //message me
+    $('#send-ps-msg').on('click ',function(e){
+      var job_id = $(this).attr('data-job');
+      var user = $(this).attr('data-user');
+      var msg = $('#editor').text();
+
+      $.post( "/inbox/send-ps-msg", { "job_id": job_id, "user": user, "msg": msg }, function(rx) {
+        $('.compose').slideToggle();
+
+        new PNotify({
+            title: 'Success',
+            text: 'Voilaa!',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+      }); // end post
+
+    });
+
+    //request service
+    $('#btn-profile-service-request').on('click ',function(e){
+        var title = $('#ps-job-title').text();
+        var job_id = $('#ps-job-id').text();
+        var name = $('#ps-job-name').text();
+
+
+        BootstrapDialog.show({
+            title: 'Confirm Request Service - ' + title,
+            message: 'Are you sure you want to request service from <b>' + name + '</b>',
+            closable: false,
+            buttons: [{
+                label: 'Yes',
+                action: function(dialogItself){
+                    dialogItself.close();
+                    $.post('/service/request-job', { 'job_id': job_id }, function(){
+                      new PNotify({
+                          title: 'Success',
+                          text: 'Voilaa!',
+                          type: 'success',
+                          styling: 'bootstrap3'
+                      });
+
+                    });
+
+                }
+            },{
+                label: 'Cancel',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        }); // end BootstrapDialog.show
+
     });
 
 });
