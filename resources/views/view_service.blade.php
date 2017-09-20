@@ -120,7 +120,7 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_tags">Tags <span class="required">*</span>
         </label>
         <div class="col-md-6 col-sm-6 col-xs-12">
-          <span id="vjob_tags" value="{{ $job->tags }}">{{ $job->tags }}</span>
+          <span class="vjob_tags" value="{{ $job->tags }}">{{ $job->tags }}</span>
           <!--
             <input type="text" id="" name="job_tags" required="required" class="form-control col-md-7 col-xs-12">
           -->
@@ -284,8 +284,8 @@
       <div class="form-group">
         <br/>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <input type="button" class="btn btn-danger btn-md pull-right" id="btn-update-cancel" href="/service" value="Cancel">
-          <input type="button" class="btn btn-primary btn-md pull-right" id="btn-update-service" value="Update">
+          <input type="button" class="btn btn-danger btn-md pull-right btn-update-cancel"  href="/service" value="Cancel">
+          <input type="button" class="btn btn-primary btn-md pull-right btn-update-service" value="Update">
         </div>
         <br/>
       </div>

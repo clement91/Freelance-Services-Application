@@ -45,6 +45,8 @@ Route::post('/service/view-profile', 'ServiceController@view_profile');
 Route::post('/service/request-job', 'ServiceController@request_job');
 Route::post('/service/accept-job', 'ServiceController@accept_job');
 Route::post('/service/reject-job', 'ServiceController@reject_job');
+Route::post('/service/refund-job', 'ServiceController@refund_job');
+Route::post('/service/update-job-progress', 'ServiceController@update_job_progress');
 
 //jobsuggest controller
 Route::get('/post-service', 'JobSuggestController@index');

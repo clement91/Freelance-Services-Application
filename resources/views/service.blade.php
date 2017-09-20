@@ -22,6 +22,12 @@
       .custom-title {
         color: #5A738E !important;
       }
+      .compose-header {
+        background: #f0ad4e !important;
+      }
+      .compose .compose-body .editor-wrapper {
+           min-height: 150px !important;
+      }
     </style>
     <h3>View & Edit Service</h3>
 
@@ -104,11 +110,12 @@
                           </a>
                           <div class="media-body">
                             <b class="title custom-title" value="{{ $job['job_id'] }}">{{ $job['job_id'] }} - {{ $job['title'] }}</b>
-                            <a href="#" class="service-pending-toolx toolx-pending-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
-                              <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
-                            </a>
-                            <a href="#" class="btn btn-success btn-xs toolx-progress-{{ $job['job_id'] }} service-refund pull-right hide">
-                              <i class="fa fa-minus-circle"></i> Refund </a>
+                              <a href="#" data-customer="{{ $job['customer_name'] }} [ {{ $job['job_id'] }} - {{ $job['title'] }} ]"  
+                                class="service-pending-toolx toolx-pending-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
+                                <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
+                              </a>
+                              <a href="#" class="btn btn-success btn-xs toolx-progress-{{ $job['job_id'] }} service-refund pull-right hide">
+                                <i class="fa fa-minus-circle"></i> Refund </a>
                             <p>Requested by: <b>{{ $job['customer_name'] }}</b></p>
                             <p class="service-pending-toolx toolx-pending-{{ $job['job_id'] }} atoolx-pending-{{ $job['job_id'] }}" style="margin-top: 5px;">
                               <a href="#" class="btn btn-primary btn-xs service-vp"><i class="fa fa-user"></i> View Profile </a>
@@ -116,7 +123,7 @@
                               <a href="#" class="btn btn-danger btn-xs service-reject"><i class="fa fa-trash-o"></i> Reject </a>
                             </p>
                             <p class="service-progress-toolx toolx-progress-{{ $job['job_id'] }} hide">
-                              <input type="text" class="ip-slider" value="" name="range" />
+                              <input type="text" class="ip-slider ip-{{ $job['job_id'] }}" data-id="{{ $job['job_id'] }}" value="" name="range" />
                             </p>
                           </div>
                           <hr/>
@@ -156,20 +163,21 @@
 
                     <div class="x_content x_contentx x_contentx_progress">
                         @foreach($inprogressJobs as $job)
-                          <article data-id="{{ $job['id'] }}" data-jobid="{{ $job['job_id'] }}" class="media event">
+                          <article data-id="{{ $job['id'] }}" data-job-id="{{ $job['job_id'] }}" class="media event">
                             <a class="pull-left date">
                               <p class="month">{{ $job['month'] }}</p>
                               <p class="day">{{ $job['date'] }}</p>
                             </a>
                             <div class="media-body">
                               <b class="title custom-title" value="{{ $job['job_id'] }}">{{ $job['job_id'] }} - {{ $job['title'] }}</b>
-                              <a href="#" class="service-pending-toolx toolx-progress-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
+                              <a href="#" data-customer="{{ $job['customer_name'] }} [ {{ $job['job_id'] }} - {{ $job['title'] }} ]"
+                                class="xtbit service-pending-toolx toolx-progress-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
                                 <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
                               </a>
-                              <a href="#" class="btn btn-success btn-xs service-refund pull-right"><i class="fa fa-minus-circle"></i> Refund </a>
+                              <a href="#" class="xtbit btn btn-success btn-xs service-refund pull-right"><i class="fa fa-minus-circle"></i> Refund </a>
                               <p>Requested by: <b>{{ $job['customer_name'] }}</b></p>
-                              <p class="service-progress-toolx spt-{{ $job['job_id'] }}">
-                                <input type="text" class="ip-slider" data-value="{{ $job['progress_status'] }}" value="{{ $job['progress_status'] }}" name="range" />
+                              <p class="xtbit service-progress-toolx spt-{{ $job['job_id'] }}">
+                                <input type="text" class="ip-slider ip-{{ $job['job_id'] }}" data-id="{{ $job['job_id'] }}" data-value="{{ $job['progress_status'] }}" value="{{ $job['progress_status'] }}" name="range" />
                               </p>
                             </div>
                             <hr/>
@@ -209,7 +217,7 @@
 
                       <div class="x_content x_contentx x_contentx_close">
                           <div class="hide">
-                              <b>Rejected Service:</b>
+                              <b>Rejected/ Refunded Service:</b>
                               <hr class="custom-hr"/>
                               <div class="service-tmp-rej-area"></div>
                           </div>
@@ -261,6 +269,28 @@
                 @endif
               </div>
 
+    </div>
+
+    <!-- compose -->
+    <div class="compose col-md-4 col-xs-12">
+      <div class="compose-header" style="text-align: left;">
+        Message to <span id="service-user-name" style="font-weight:bold;"></span>
+        <button type="button" class="close compose-close">
+          <span>×</span>
+        </button>
+      </div>
+
+      <div class="compose-body">
+        <div id="alerts"></div>
+
+        <div id="editor" class="editor-wrapper" style="text-align: left;">
+        </div>
+
+      </div>
+
+      <div class="compose-footer">
+        <button id="send-service-comment" class="btn btn-sm btn-primary pull-left" type="button">Send</button>
+      </div>
     </div>
 
 

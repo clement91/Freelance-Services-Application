@@ -471,6 +471,7 @@
       <div class="compose-footer">
         <button id="send-ps-msg" data-job="{{ $job['job_id'] }}" data-user="{{ $job['user'] }}" class="btn btn-sm btn-success pull-left" type="button">Send</button>
       </div>
+    </div>
 
 
     <script src="{{ asset('js/profile_service.js') }}"></script>

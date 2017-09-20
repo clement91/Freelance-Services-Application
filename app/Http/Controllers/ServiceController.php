@@ -101,7 +101,7 @@ class ServiceController extends Controller
 
             $jbs = Job::where('job_id', $job->job_id)->first();
             $customer = User::where('id', $job->customer_id)->first();
-
+            
             $out['inprogressJobs'][$key]['id'] = $job->id;
             $out['inprogressJobs'][$key]['job_id'] = $job->job_id. $job->id;
             $out['inprogressJobs'][$key]['title'] = $jbs->title;
@@ -124,42 +124,13 @@ class ServiceController extends Controller
 
         //get close job
         $jobs_ids = $jobs->pluck('job_id');
-        $jobs_g = JobTransaction::whereIn('status', ['Closed', 'Rejected'])
+        $jobs_g = JobTransaction::whereIn('status', ['Closed', 'Rejected', 'Refunded'])
                     ->whereIn('job_id', $jobs_ids)
                     ->orderBy('Status')
                     ->get();
 
         if($jobs_g->count()){
-          foreach($jobs_g as $key=>$job){
 
-            $jbs = Job::where('job_id', $job->job_id)->first();
-            $customer = User::where('id', $job->customer_id)->first();
-
-            $out['closeJobs'][$key]['job_id'] = $job->job_id. $job->id;
-            $out['closeJobs'][$key]['title'] = $jbs->title;
-            $out['closeJobs'][$key]['customer_name'] = $customer->name;
-            $out['closeJobs'][$key]['status'] = $job->status;
-
-            $Year = $job->created_at->format('Y');
-            $Month = $job->created_at->format('M');
-            $Date = $job->created_at->format('d');
-
-            $out['closeJobs'][$key]['date'] = $Date;
-            $out['closeJobs'][$key]['month'] = $Month;
-            $out['closeJobs'][$key]['year'] = $Year;
-          }
-        }
-        else
-        {
-          $out['closeJobs'] = null;
-        }
-
-        //get request job
-        $jobs_g = JobTransaction::whereIn('status', ['Closed', 'Rejected'])
-                    ->orderBy('Status')
-                    ->get();
-
-        if($jobs_g->count()){
           foreach($jobs_g as $key=>$job){
 
             $jbs = Job::where('job_id', $job->job_id)->first();
@@ -391,13 +362,6 @@ class ServiceController extends Controller
       return view('profile_service', $out);
     }
 
-    public static function quickRandom($length = 10)
-    {
-        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
-    }
-
     public function request_job(Request $request)
     {
       //pending -> accept -> payment_received -> start -> In Progress -> close
@@ -421,9 +385,8 @@ class ServiceController extends Controller
 
     public function accept_job(Request $request)
     {
-
-        $jobtrans = JobTransaction::where('id', $request->id);
-        $jobtrans->update(['status' =>  'Progress' ]);
+       $jobtrans = JobTransaction::where('id', $request->id);
+       $jobtrans->update(['status' =>  'Progress' ]);
 
         //return $out;
         return 0;
@@ -436,6 +399,23 @@ class ServiceController extends Controller
 
         //return $out;
         return 0;
+    }
+
+    public function refund_job(Request $request)
+    {
+      $jobtrans = JobTransaction::where('id', $request->id);
+      $jobtrans->update(['status' =>  'Refunded' ]);
+
+        //return $out;
+        return 0;
+    }
+
+    public function update_job_progress(Request $request)
+    {
+      $jobtrans = JobTransaction::where('id', $request->id);
+      $jobtrans->update(['progress_status' =>  $request->value ]);
+
+      return 0;
     }
 
     public function getUpload()

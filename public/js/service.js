@@ -17,26 +17,130 @@ $(function () {
     });
 
     //slider
-    $(".ip-slider").ionRangeSlider({
-			  type: "double",
-			  min: $(this).val(),
-			  max: 100,
-			  from: 0,
-			  to: $(this).val(),
-			  max_interval: 100,
-        from_fixed: true,
-        step: 5,
-        grid: true,
+    $(".ip-slider").each(function() {
+      $(this).ionRangeSlider({
+          type: "double",
+          min: 0,
+          max: 100,
+          from: 0,
+          to: $(this).val(),
+          max_interval: 100,
+          from_fixed: true,
+          step: 5,
+          grid: true,
+          postfix: "%",
+          onStart: function (data) {
 
-        onSlideEnd: function(position, value) {
-          console.log(position + ' - ' + value)
-        }
+          },
+          onChange: function (data) {
 
-			});
+          },
+          onFinish: function (data) {
+            var id = data.input.context.classList[1];
+            sliderFin(id);
+          },
+          onUpdate: function (data) {
 
-    $(".ip-slider").on('input change',function(e){
-
+          }
+        });
     });
+
+    function sliderFin(id)
+    {
+      var old_value = $('.' + id).attr('data-value');
+      var value = $('.' + id).val().split(";")[1];
+      var job_transaction_id = $('.' + id).parents("article").attr("data-id");
+
+      BootstrapDialog.show({
+          title: 'In Progress Service',
+          message: 'Update current progress from <b>' + old_value + '%</b> to <b>'+ value + '%</b>?',
+          closable: false,
+          buttons: [{
+              label: 'Confirm',
+              action: function(dialogItself){
+                  dialogItself.close();
+                  console.log(job_transaction_id + ' - ' + value)
+                  $.post('/service/update-job-progress', { 'id': job_transaction_id, 'value': value }, function(){
+                    new PNotify({
+                        title: 'Success',
+                        text: 'Voilaa!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+
+                  });
+
+              }
+          },{
+              label: 'Cancel',
+              action: function(dialogItself){
+                  dialogItself.close();
+
+                  var slider = $('.' + id).data("ionRangeSlider");
+                  slider.update({
+                      //from: 0,
+                      to: old_value,
+                      // etc.
+                  });
+              }
+          }]
+      }); // end BootstrapDialog.show
+    }
+
+    /*
+    //asynchronous method
+    var globalTimeout = null;
+    $(".ip-slider").on('input change',function(e){
+      var id = $(this).attr('data-id');
+      var old_value = $(this).attr('data-value');
+      var value = $(this).val().split(";")[1];
+
+      if (globalTimeout != null) {
+        clearTimeout(globalTimeout);
+      }
+      globalTimeout = setTimeout(function() {
+        globalTimeout = null;
+
+        if($('.bootstrap-dialog').length == 0)
+        {
+          BootstrapDialog.show({
+              title: 'In Progress Service',
+              message: 'Update current progress from <b>' + old_value + '%</b> to <b>'+ value + '%</b>?',
+              closable: false,
+              buttons: [{
+                  label: 'Confirm',
+                  action: function(dialogItself){
+                      dialogItself.close();
+
+                      $.post('/service/update-progress', { 'job_id': id }, function(){
+                        new PNotify({
+                            title: 'Success',
+                            text: 'Voilaa!',
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });
+
+                      });
+
+                  }
+              },{
+                  label: 'Cancel',
+                  action: function(dialogItself){
+                      dialogItself.close();
+
+                      var slider = $(".ip-" + id).data("ionRangeSlider");
+                      slider.update({
+                          //from: 0,
+                          to: old_value,
+                          // etc.
+                      });
+                  }
+              }]
+          }); // end BootstrapDialog.show
+        }
+      }, 500);
+    });
+    */
 
     $('.service-vp').on('click',function(e){
       var id = $(this).parents("article").data('id'); //transaction id
@@ -88,6 +192,45 @@ $(function () {
         $('.toolx-progress-' + job_id).remove();
         $('.toolx-pending-' + job_id).remove();
       }); // end post
+    });
+
+    $('.service-refund').on('click',function(e){
+      var id = $(this).parents("article").data('id'); //transaction id
+      var job_id = $(this).parents("article").data('job-id');
+      var element = $(this).parents("article");
+
+      $.post( "/service/refund-job", { "id": id, }, function(rx) {
+        if($('.x_contentx_close').hasClass('nj') == true)
+        {
+          $('.x_contentx_close').children('h2').remove();
+          $(element).css('padding-top', '10px');
+        }
+        //move
+        $(element).appendTo('.service-tmp-rej-area');
+        $('.service-tmp-rej-area').parents('div').removeClass('hide');
+        $('.x_contentx_close').removeClass('nj');
+
+        $('.toolx-progress-' + job_id).parents('article').find('.xtbit').remove();
+
+      }); // end post
+    });
+
+    //message
+    $('.service-chat').on('click ',function(e){
+      var user = $(this).attr('data-customer');
+
+      $('#editor').text('');
+      $('#service-user-name').text(' ' + user);
+      $('.compose').slideToggle();
+    });
+
+    $('.compose-close').on('click ',function(e){
+      $('.compose').slideToggle();
+    });
+
+    $('#send-service-comment').on('click ',function(e){
+      $('.compose').slideToggle();
+
     });
 
 });
