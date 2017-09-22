@@ -6,8 +6,10 @@ use Auth;
 use App\Job;
 use App\Inboxe;
 use App\JobPublicComment;
+use App\JobPrivateComment;
 use App\User;
 use Illuminate\Http\Request;
+date_default_timezone_set('Asia/Singapore');
 
 class InboxController extends Controller
 {
@@ -49,6 +51,45 @@ class InboxController extends Controller
         }
 
         return view('comment_list', $out);
+    }
+
+    public function add_private_pub(Request $request)
+    {
+        $out = [];
+        $user_id = Auth::user()->id;
+
+        $new_jpc = new JobPrivateComment;
+        $new_jpc->job_transaction_id = $request->job_id;
+        $new_jpc->msg = $request->msg;
+        $new_jpc->users = $user_id;
+
+        if($new_jpc->save())
+        {
+          $out['comments'] = JobPrivateComment::where('id', $new_jpc->id)
+                              ->with('xusers')
+                              ->get();
+        }
+
+        return view('private_comment_list', $out);
+    }
+
+    public function get_private_pubs(Request $request)
+    {
+        $out = [];
+        $jpc = JobPrivateComment::where('job_transaction_id', $request->job_id)
+                ->with('xusers')
+                ->get();
+
+        if($jpc->count())
+        {
+          $out['comments'] = $jpc;
+          return view('private_comment_list', $out);
+        }
+        else
+        {
+          return null;
+        }
+
     }
 
     public function send_ps_msg(Request $request)

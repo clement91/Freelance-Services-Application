@@ -221,16 +221,35 @@ $(function () {
 
       $('#editor').text('');
       $('#service-user-name').text(' ' + user);
-      $('.compose').slideToggle();
+      $('#send-private-service-comment').data('job_id', $(this).attr('data-value'));
+      $('.list-unstyled.msg_list').children().remove();
+
+      $.post( "/inbox/get-private-comments", { "job_id": $(this).attr('data-value') }, function(rx) {
+        //console.log(rx)
+        $('.list-unstyled.msg_list').prepend(rx);
+        $('.compose').slideToggle();
+
+      }); // end post
+
     });
 
-    $('.compose-close').on('click ',function(e){
-      $('.compose').slideToggle();
+    $('#send-private-service-comment').on('click ',function(e){
+      var job_id = $(this).data('job_id');
+      var msg = $('#editor').text();
+
+      $.post( "/inbox/add-private-comment", { "job_id": job_id, "msg": msg }, function(rx) {
+        //console.log(rx)
+        $('.list-unstyled.msg_list').append(rx);
+        $('#editor').text('');
+
+        //var e = jQuery.Event("keydown");
+        //e.which = 34; // # Some key code value
+        //$('.list-unstyled.msg_list').trigger(e);
+
+      }); // end post
+
     });
 
-    $('#send-service-comment').on('click ',function(e){
-      $('.compose').slideToggle();
 
-    });
 
 });

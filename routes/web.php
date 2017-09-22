@@ -29,6 +29,8 @@ Route::post('/profile/validate-img', 'ProfileController@validate_img');
 //inbox controller
 Route::get('/inbox', 'InboxController@index');
 Route::post('/inbox/add-public-comment', 'InboxController@add_comment_pub');
+Route::post('/inbox/add-private-comment', 'InboxController@add_private_pub');
+Route::post('/inbox/get-private-comments', 'InboxController@get_private_pubs');
 Route::post('/inbox/send-ps-msg', 'InboxController@send_ps_msg');
 
 //service controller

@@ -26,7 +26,17 @@
         background: #f0ad4e !important;
       }
       .compose .compose-body .editor-wrapper {
-           min-height: 150px !important;
+           height: 50px !important;
+      }
+      .msg_list {
+        min-height: 200px;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+      .msg_time {
+        font-size: 11px;
+        font-style: italic;
+        font-weight: 700;
       }
     </style>
     <h3>View & Edit Service</h3>
@@ -110,8 +120,8 @@
                           </a>
                           <div class="media-body">
                             <b class="title custom-title" value="{{ $job['job_id'] }}">{{ $job['job_id'] }} - {{ $job['title'] }}</b>
-                              <a href="#" data-customer="{{ $job['customer_name'] }} [ {{ $job['job_id'] }} - {{ $job['title'] }} ]"  
-                                class="service-pending-toolx toolx-pending-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
+                              <a href="#" data-customer="{{ $job['customer_name'] }} [ {{ $job['job_id'] }} - {{ $job['title'] }} ]"
+                                data-value="{{ $job['job_id'] }}" class="service-pending-toolx toolx-pending-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
                                 <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
                               </a>
                               <a href="#" class="btn btn-success btn-xs toolx-progress-{{ $job['job_id'] }} service-refund pull-right hide">
@@ -171,7 +181,7 @@
                             <div class="media-body">
                               <b class="title custom-title" value="{{ $job['job_id'] }}">{{ $job['job_id'] }} - {{ $job['title'] }}</b>
                               <a href="#" data-customer="{{ $job['customer_name'] }} [ {{ $job['job_id'] }} - {{ $job['title'] }} ]"
-                                class="xtbit service-pending-toolx toolx-progress-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
+                                data-value="{{ $job['job_id'] }}" class="xtbit service-pending-toolx toolx-progress-{{ $job['job_id'] }} btn btn-warning btn-xs service-chat pull-right">
                                 <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
                               </a>
                               <a href="#" class="xtbit btn btn-success btn-xs service-refund pull-right"><i class="fa fa-minus-circle"></i> Refund </a>
@@ -281,15 +291,28 @@
       </div>
 
       <div class="compose-body">
-        <div id="alerts"></div>
-
+        <ul class="list-unstyled msg_list">
+          <!--
+          <li>
+            <a style="width: 100%;">
+              <span>
+                <span><b>John Smith</b></span>
+                <span class="msg_time pull-right">3 mins ago</span>
+              </span>
+              <span class="message">
+                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that abu bakar binti
+              </span>
+            </a>
+          </li>
+          -->
+        </ul>
         <div id="editor" class="editor-wrapper" style="text-align: left;">
         </div>
 
       </div>
 
       <div class="compose-footer">
-        <button id="send-service-comment" class="btn btn-sm btn-primary pull-left" type="button">Send</button>
+        <button id="send-private-service-comment" class="btn btn-sm btn-primary pull-left" type="button">Send</button>
       </div>
     </div>
 
