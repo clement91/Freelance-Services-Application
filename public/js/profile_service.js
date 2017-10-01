@@ -128,26 +128,42 @@ $(function () {
     //request service
     $('#btn-profile-service-request').on('click ',function(e){
         var title = $('#ps-job-title').text();
+        var desc = $('#ps-job-desc').text();
+        var price = $('#ps-job-price').text();
+        var cat = $('#ps-job-cat').text();
+        var instruction = $('#ps-job-instruction').text();
+        var deliver = $('#ps-job-deliver').text();
         var job_id = $('#ps-job-id').text();
         var name = $('#ps-job-name').text();
 
-
+        var msg = '<p style="font-size:16px">Are you sure you want to request service from <b>' + name + '</b>?\n\n\
+                    <b>Title:</b> ' + title + '\n\
+                    <b>Description:</b> ' + desc + '\n\
+                    <b>Category:</b> ' + cat + '\n\
+                    <b>Price:</b> ' + price + '\n\
+                    <b>Instruction:</b> ' + instruction + '\n\
+                    <b>' + deliver + ' Days Delivery</b></p>';
         BootstrapDialog.show({
-            title: 'Confirm Request Service - ' + title,
-            message: 'Are you sure you want to request service from <b>' + name + '</b>',
+            title: 'Confirm Request Service',
+            message: msg,
             closable: false,
             buttons: [{
-                label: 'Yes',
+                label: 'Confirm',
                 action: function(dialogItself){
                     dialogItself.close();
-                    $.post('/service/request-job', { 'job_id': job_id }, function(){
+
+                    $.post('/service/add-payment', { 'job_id': job_id }, function(rx){
+                        $('.x-table').empty();
+                        $('.text-center').removeClass('text-center');
+                        $('.x-table').html(rx);
+                      /*
                       new PNotify({
                           title: 'Success',
                           text: 'Voilaa!',
                           type: 'success',
                           styling: 'bootstrap3'
                       });
-
+                      */
                     });
 
                 }

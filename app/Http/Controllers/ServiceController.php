@@ -101,7 +101,7 @@ class ServiceController extends Controller
 
             $jbs = Job::where('job_id', $job->job_id)->first();
             $customer = User::where('id', $job->customer_id)->first();
-            
+
             $out['inprogressJobs'][$key]['id'] = $job->id;
             $out['inprogressJobs'][$key]['job_id'] = $job->job_id. $job->id;
             $out['inprogressJobs'][$key]['title'] = $jbs->title;
@@ -350,6 +350,7 @@ class ServiceController extends Controller
         'child_category' => $cat_f->child_category,
         'price' => $job_f->price,
         'instruction' => $job_f->instruction,
+        'days_to_deliver' => $job_f->days_to_deliver,
         'tags' => $job_f->tags,
         'location' => $location_f->location,
         'url_link' => $job_f->url_link,
@@ -378,9 +379,13 @@ class ServiceController extends Controller
       $new_jobtrans->price = $job_f->price;
       $new_jobtrans->customer_id = $user_id;
 
-      $new_jobtrans->save();
+      if($new_jobtrans->save())
+      {
+        $jobtrans = JobTransaction::where('id', $new_jobtrans->id);
+        $jobtrans->update(['job_transaction_id' =>  $request->job_id. $new_jobtrans->id ]);
+      }
 
-      return 0;
+      return view('payment_success');
     }
 
     public function accept_job(Request $request)
@@ -417,6 +422,26 @@ class ServiceController extends Controller
 
       return 0;
     }
+
+    public function add_payment(Request $request)
+    {
+       $out = [];
+       $user_id = Auth::user()->id;
+
+       $job = Job::where('job_id', $request->job_id)->first();
+
+       $out['job'] = $job;
+       $out['buyer'] = User::where('id', $user_id)
+                          ->with('xprofile')
+                          ->first();
+       $out['seller'] = User::where('id', $job->users)
+                         ->with('xprofile')
+                         ->first();
+
+        //return $out;
+        return view('payment', $out);
+    }
+
 
     public function getUpload()
     {

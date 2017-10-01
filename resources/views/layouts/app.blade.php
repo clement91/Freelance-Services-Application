@@ -457,6 +457,7 @@
     <script src="{{ asset('js/add_new_service.js') }}"></script>
     <script src="{{ asset('js/find_service.js') }}"></script>
     <script src="{{ asset('js/post_service.js') }}"></script>
+    <script src="{{ asset('js/inbox.js') }}"></script>
 
 </body>
 </html>

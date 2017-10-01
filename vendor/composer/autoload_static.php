@@ -304,8 +304,9 @@ class ComposerStaticInit412aa85be3f29f952590dba118118780
 
     public static $classMap = array (
         'AddImageUrlToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_19_123453_add_image_url_to_users_table.php',
-        'AddJobTransactionId' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_044938_add_job_transaction_id.php',
+        'AddJobTransactionId' => __DIR__ . '/../..' . '/database/migrations/2017_09_27_120628_add_job_transaction_id.php',
         'AddProgressStatus' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_102044_add_progress_status.php',
+        'AddReadType' => __DIR__ . '/../..' . '/database/migrations/2017_09_27_115705_add_read_type.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

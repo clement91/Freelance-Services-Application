@@ -27,4 +27,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function xprofile()
+    {
+        return $this->hasOne('App\Profile', 'id', 'owner');
+    }
+
 }

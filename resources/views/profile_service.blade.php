@@ -95,7 +95,7 @@
                         </li>
                       </ul>
 
-                      <a class="compose-public btn btn-success"><i class="fa fa-envelope m-right-xs"></i> Message Me</a>
+                      <a class="compose-public btn btn-success"><i class="fa fa-envelope m-right-xs"></i> Contact Me</a>
                       <br />
                       {{--
                       <!-- start skills -->
@@ -206,7 +206,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Description:</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['desc'] }}</span>
+                                      <span id="ps-job-desc" class="col-md-12 col-xs-12 control-span">{{ $job['desc'] }}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -215,7 +215,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Price:</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['price'] }}</span>
+                                      <span id="ps-job-price" class="col-md-12 col-xs-12 control-span">{{ $job['price'] }}</span>
                                     </div>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Category:</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['parent_category'] }}, {{ $job['child_category'] }}</span>
+                                      <span id="ps-job-cat" class="col-md-12 col-xs-12 control-span">{{ $job['parent_category'] }}, {{ $job['child_category'] }}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -243,7 +243,8 @@
                                   <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Instruction to buyer:</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <span class="col-md-12 col-xs-12 control-span">{{ $job['instruction'] }}</span>
+                                      <span id="ps-job-instruction" class="col-md-12 col-xs-12 control-span">{{ $job['instruction'] }}</span>
+                                      <span id="ps-job-deliver" class="hide">{{ $job['days_to_deliver'] }}</span>
                                     </div>
                                   </div>
                                 </div>

@@ -32,6 +32,9 @@ Route::post('/inbox/add-public-comment', 'InboxController@add_comment_pub');
 Route::post('/inbox/add-private-comment', 'InboxController@add_private_pub');
 Route::post('/inbox/get-private-comments', 'InboxController@get_private_pubs');
 Route::post('/inbox/send-ps-msg', 'InboxController@send_ps_msg');
+Route::post('/inbox/read-mail', 'InboxController@read_mail');
+Route::post('/inbox/send-mail', 'InboxController@send_mail');
+Route::post('/inbox/read-chat', 'InboxController@read_chat');
 
 //service controller
 Route::get('/service', 'ServiceController@index');
@@ -49,6 +52,9 @@ Route::post('/service/accept-job', 'ServiceController@accept_job');
 Route::post('/service/reject-job', 'ServiceController@reject_job');
 Route::post('/service/refund-job', 'ServiceController@refund_job');
 Route::post('/service/update-job-progress', 'ServiceController@update_job_progress');
+
+//payment
+Route::post('/service/add-payment', 'ServiceController@add_payment');
 
 //jobsuggest controller
 Route::get('/post-service', 'JobSuggestController@index');
