@@ -42,6 +42,7 @@
     <link href="{{ asset('vendors/bootstrap-select/bootstrap-select-1.12.2.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/selectize.js-master/dist/css/selectize.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.css') }}" rel="stylesheet">
+      <link href="{{ asset('vendors/country-select-js-master/build/css/countrySelect.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -185,7 +186,10 @@
                             </a>
                           </li>
                           <li><a href="/help">Help</a></li>
-                          <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                          <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                              <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                          </li>
                         </ul>
                       </li>
                       {{--
@@ -305,7 +309,7 @@
             <!-- footer content -->
             <footer>
               <div class="pull-right">
-                fsa - Freelance Services App by <a href="https://colorlib.com">Colorlib</a>
+                Freelance Services App | CMPJ 6106 - MASTER PROJECT <a href="http://www.oum.edu.my/"><b>OUM</b></a>
               </div>
               <div class="clearfix"></div>
             </footer>
@@ -447,11 +451,13 @@
     <script src="{{ asset('vendors/selectize.js-master/dist/js/standalone/selectize.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-switch-master/dist/js/bootstrap-switch.js') }}"></script>
     <script src="{{ asset('vendors/list.js/dist/list.js') }}"></script>
+    <script src="{{ asset('vendors/country-select-js-master/build/js/countrySelect.js') }}"></script>
 
     <!-- PNotify -->
     <script src="../gentelella/vendors/pnotify/dist/pnotify.custom.min.js"></script>
 
     <!-- Custom js files -->
+
     <script src="{{ asset('js/profile.js') }}"></script>
     <script src="{{ asset('js/service.js') }}"></script>
     <script src="{{ asset('js/add_new_service.js') }}"></script>

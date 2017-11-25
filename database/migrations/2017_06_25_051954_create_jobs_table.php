@@ -26,6 +26,9 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('days_to_deliver')->nullable();
             $table->string('image_path');
             $table->string('url_link');
+            $table->string('max');
+            $table->string('email');
+            $table->string('sms');
             $table->unsignedInteger('users')->nullable();
             $table->timestamps();
         });

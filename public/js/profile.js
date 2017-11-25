@@ -13,6 +13,10 @@ $(function () {
       $(this).addClass('open');
     });
 
+    $("#text-country").countrySelect();
+    if($("#country_code").attr('value') != "")
+      $("#text-country").countrySelect("setCountry", $("#country_code").attr('value'));
+
     //upload img handling - Start
     $('#btn-upload').on('click',function(e){
       $('#btn-upload').attr('data-value', '1');
@@ -66,10 +70,7 @@ $(function () {
               */
             }else{
 
-              BootstrapDialog.show({
-                title: 'Object Management',
-                message: data
-              });
+
             }
 
           },
@@ -88,52 +89,109 @@ $(function () {
 
     //update info
     $('#btn-update').on('click',function(e){
+      $('.has-error').removeClass('has-error');
+
       var id = $("#img-upload").data('user');
+      var result = 0;
 
-      $.post( "/profile/update", {
-        "id": id,
-        "email": $('#text-email').val(),
-        "contact": $('#text-contact').val(),
-        "address1": $('#text-address1').val(),
-        "address2": $('#text-address2').val(),
-        "city": $('#text-city').val(),
-        "postal_code": $('#text-postal_code').val(),
-        "country": $('#text-country').children().attr('value'),
-        "desc": $('#text-desc').val(),
-        "img": $('#img-src').attr('src'),
-        "upload_value" : $('#btn-upload').attr('data-value')
+      $('.psb').find('.form-control').each(function(index) {
+        if(index < ($('.psb').find('.form-control').length-1))
+          if($(this).val() == '')
+          {
+            $(this).addClass('has-error');
+            new PNotify({
+                title: 'Error',
+                text: 'Password make sure all fields are filled up\nwith valid information.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
 
-      }, function(rx) {
-        if(rx != 0){
-          //update nav image
-          $('.nav-img').attr('src', rx);
-        }
-        $('#btn-upload').attr('data-value' , '0');
+            result = 1;
+          }
+      });
 
-        BootstrapDialog.show({
-            title: ' Profile',
-            message: 'Profile update successful.'
-        });
+      if(result == 0)
+      {
+        $.post( "/profile/update", {
+          "id": id,
+          "email": $('#text-email').val(),
+          "contact": $('#text-contact').val(),
+          "address1": $('#text-address1').val(),
+          "address2": $('#text-address2').val(),
+          "city": $('#text-city').val(),
+          "postal_code": $('#text-postal_code').val(),
+          "country": $('#text-country').val(),
+          "desc": $('#text-desc').val(),
+          "img": $('#img-src').attr('src'),
+          "upload_value" : $('#btn-upload').attr('data-value')
 
-      })
+        }, function(rx) {
+          if(rx != 0){
+            //update nav image
+            $('.nav-img').attr('src', rx);
+          }
+          $('#btn-upload').attr('data-value' , '0');
+          new PNotify({
+              title: 'Success',
+              text: 'Profile update successful!',
+              type: 'success',
+              styling: 'bootstrap3'
+          });
+
+        })
+      }
+
+
     });
 
     //update password
     $('#btn-update-pass').on('click',function(e){
+      $('.has-error').removeClass('has-error');
+
       var id = $("#img-upload").data('user');
 
-      $.post( "/profile/update-password", {
-        "id": id,
-        "password": $('#text-password').val(),
-      }, function(rx) {
-        if(rx){
-          BootstrapDialog.show({
-              title: ' Profile',
-              message: 'Password update successful.'
+      if($('#text-password').val() != '')
+      {
+        if($('#text-password').val() == $('#text-confirm-password').val())
+        {
+          $.post( "/profile/update-password", {
+            "id": id,
+            "password": $('#text-password').val(),
+          }, function(rx) {
+            if(rx){
+              new PNotify({
+                  title: 'Success',
+                  text: 'Password update successful!',
+                  type: 'success',
+                  styling: 'bootstrap3'
+              });
+            }
+          })
+        }
+        else
+        {
+          $('#text-password').addClass('has-error');
+          $('#text-confirm-password').addClass('has-error');
+
+          new PNotify({
+              title: 'Error',
+              text: 'Both passwords are different.\nPlease re-enter your confirmation password',
+              type: 'error',
+              styling: 'bootstrap3'
           });
         }
+      }
+      else
+      {
+        $('#text-password').addClass('has-error');
+        new PNotify({
+            title: 'Error',
+            text: 'Password is empty.\nPlease enter your new password',
+            type: 'error',
+            styling: 'bootstrap3'
+        });
+      }
 
-      })
     });
 
 });

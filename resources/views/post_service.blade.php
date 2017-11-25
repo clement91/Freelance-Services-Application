@@ -3,17 +3,22 @@
 @section('content')
 <!-- page content -->
     <style>
-
+      .centered {
+        margin: auto;
+        width: 60% !important;
+        padding: 10px !important;
+        display: flow-root !important;
+      }
     </style>
     <h3>Post a Service</h3>
-    <div class="x_panel">
+    <div class="x_panel centered">
       <div class="x_content x_content_ps_1">
           <br/>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <label>Raise a service that you need. There are bunch of awesome folks out there will reach you!</label>
                 <textarea id="txt-post_service" name="txt-post_service" required="required" class="form-control col-md-7 col-xs-12"
-                  style="resize: none;"></textarea>
+                  style="resize: none;height: 300px;"></textarea>
             </div>
           </div>
           <br/>

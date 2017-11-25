@@ -2,6 +2,9 @@
     <?php
         if(!isset($xpubComments)) { $xpubComments = null; }
         if(!isset($users)) { $users = null; }
+        if(!isset($commentRates)) { $commentRates = 0; }
+        if(!isset($commentStars)) { $commentStars = null; }
+        $i = 0;
      ?>
     <style>
       .mxg {
@@ -21,7 +24,7 @@
       }
       .messages {
         overflow: auto;
-        height: 250px;
+        max-height: 250px;
       }
       .message_date {
         padding-right: 10px;
@@ -67,41 +70,51 @@
                   <p><strong>Description: </strong> {{ $job->description }} </p>
                   <p><strong>Location: </strong> {{ $job->xlocation->location }} </p>
                   <p><strong>Category: </strong> {{ $job->xcategory->parent_category }}, {{ $job->xcategory->child_category }} </p>
-                  <p><strong>Keywords: </strong><span id="onload_service_tagx">{{ $job->tags }}</span> </p>
-                  <input class="hide" id="onload_service_tagv" value="{{ $job->tags }}"/>
+                  <p><strong>Keywords: </strong><span id="onload_service_tagx-{{ $i }}" class="tgtg">{{ $job->tags }}</span> </p>
+                  <input class="hide" id="onload_service_tagv-{{ $i }}" value="{{ $job->tags }}"/>
                 </div>
 
                 <div class="left col-xs-12">
                   Comments:
                   <ul class="messages">
                     <li></li>
+                    <?php $y = 0;?>
+                    @if($commentRates)
+                      @foreach($commentRates as $comment)
+                        @if($comment->job_id == $job->job_id)
+                          <li>
+                              <div class="message_date">
+                                <?php
+                                  $datetime = $comment->created_at;
+                                  $date = Carbon\Carbon::parse($datetime)->format('d');
+                                  $month = Carbon\Carbon::parse($datetime)->format('M');
+                                ?>
+                                <h3 class="date text-info">{{ $date }}</h3>
+                                <p class="month">{{ $month }}</p>
+                              </div>
+                              <div class="message_wrapper">
+                                <blockquote class="message">{{ $comment->msg }}</blockquote>
+                                <br />
+                                <p class="name">
+                                  @if($users != null)
+                                    @foreach($users as $user)
+                                      @if($user->id == $comment->users)
+                                        {{ $user->name }}
+                                      @endif
+                                    @endforeach
+                                   @endif
+                                </p>
+                              </div>
+                          </li>
 
-                    @if($job->xpubComments->count() != 0)
-                      @foreach($job->xpubComments as $comment)
-                        <li>
-                            <div class="message_date">
-                              <h3 class="date text-info">17</h3>
-                              <p class="month">June</p>
-                            </div>
-                            <div class="message_wrapper">
-                              <blockquote class="message">{{ $comment->msg }}</blockquote>
-                              <br />
-                              <p class="name">
-                                @if($users != null)
-                                  @foreach($users as $user)
-                                    @if($user->id == $comment->users)
-                                      {{ $user->name }}
-                                    @endif
-                                  @endforeach
-                                 @endif
-                              </p>
-                            </div>
-                        </li>
+                          <?php $y++; ?>
+                        @endif
                       @endforeach
-                    @else
-                      <li style="font-style:italic">&nbsp;No comment at this moment</li>
                     @endif
 
+                    @if ($y == 0)
+                      <li style="font-style:italic">&nbsp;No comment at this moment</li>
+                    @endif
                   </ul>
                 </div>
               </div>
@@ -109,12 +122,43 @@
               <div class="col-xs-12 bottom">
                 <div class="col-xs-12 col-sm-6 emphasis">
                   <p class="ratings">
-                    <a>4.0</a>
-                    <a href="#"><span class="fa fa-star"></span></a>
-                    <a href="#"><span class="fa fa-star"></span></a>
-                    <a href="#"><span class="fa fa-star"></span></a>
-                    <a href="#"><span class="fa fa-star"></span></a>
-                    <a href="#"><span class="fa fa-star-o"></span></a>
+                    <?php $y = 0; ?>
+                    @if($commentStars)
+                      @foreach($commentStars as $comment)
+                        @if($comment['job_id'] == $job->job_id)
+                          <a>{{ $comment['average'] }}.0</a>
+
+                          @for($d = 0; $d < 5; $d++)
+                            @if($d < $comment['average'])
+                              <a href="#"><span class="fa fa-star"></span></a>
+                            @else
+                              <a href="#"><span class="fa fa-star-o"></span></a>
+                            @endif
+                          @endfor
+
+                          <?php $y++; ?>
+                        @endif
+                      @endforeach
+                    @endif
+                    @if ($y == 0)
+                      <a style="font-size:12px">0.0
+                      No rating at this moment</a>
+                    @endif
+
+                    <!--
+                    @if($job->xpubComments->count() != 0)
+                      @for($i = 0; $i < 5; $i++)
+                        @if($i < $rate)
+                          <a href="#"><span class="fa fa-star"></span></a>
+                        @else
+                          <a href="#"><span class="fa fa-star-o"></span></a>
+                        @endif
+                      @endfor
+                    @else
+                      <a style="font-size:12px">0.0
+                      No rating at this moment</a>
+                    @endif
+                  -->
                   </p>
                 </div>
                 <div class="col-xs-12 col-sm-6 emphasis emphasis-right">
@@ -127,6 +171,7 @@
               </div>
             </div>
         </div>
+          <?php $i++; ?>
         @endforeach
     </div>
     <script src="{{ asset('js/onload_service.js') }}"></script>

@@ -80,7 +80,7 @@ class RegisterController extends Controller
       //update default image url into users table
       $usr = User::where('id', $user->id);
       $usr->update(['image_url' => 'img/default.jpg']);
-      
+
       //create profiles table
       $profile = new Profile;
       $profile->owner = $user->id;

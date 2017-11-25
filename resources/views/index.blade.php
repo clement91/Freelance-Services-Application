@@ -233,8 +233,10 @@
             <p class="lead text-center">Don't wait any longer, start your search now.</p>
             <div class="row text-center">
               <div class="col-md-2"></div>
+              <!--
               <input type="text" class="form-control txt-ffs" placeholder="Find freelance services here ..." id="txt-ffs" name="txt-ffs"
                 style="width: 70%;height: 45px;border-radius: 8px;">
+              -->
             </div>
             <br/>
             <div class="form-group text-center">

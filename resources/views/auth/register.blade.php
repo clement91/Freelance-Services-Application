@@ -1,8 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+
 <div class="panel panel-default">
-    <div class="panel-heading">Register</div>
+    <div class="panel-heading">Register Form</div>
     <div class="panel-body">
         <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
@@ -34,6 +42,8 @@
                     @endif
                 </div>
             </div>
+
+            <hr/>
 
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label for="password" class="col-md-4 control-label">Password</label>

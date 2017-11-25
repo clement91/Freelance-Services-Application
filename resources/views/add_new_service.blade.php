@@ -8,7 +8,9 @@
         -webkit-appearance: none;
         margin: 0;
       }
-
+      .has-error {
+        border-color: #CD5C5C;
+      }
       .selectize-control.multi .selectize-input > div {
             background: #1b9dec;
             border-radius: 3px;
@@ -178,25 +180,11 @@
                 </div>
 
                 <hr/>
-
+                <!--
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_imgs">Images/ Files
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <!--
-                      <input type="text" id="job_imgs" name="job_imgs" required="required" class="form-control col-md-7 col-xs-12">
-                      <form action="/service/validate-img" id="job_imgs" value="" class="dropzone"></form>
-
-                      <form action="/service/validate-img" id="my-awesome-dropzone" value="" class="dropzone">
-                          <div class="fallback">
-                            <input name="file" type="file" multiple />
-                          </div>
-                          <div class="uploadPro">
-                            <input id="pronumber" name="pronumber" class="form-control" size="1" />
-                          </div>
-                      </form>
-                    -->
-
                     {!! Form::open(['url' => route('upload-post'), 'class' => 'dropzone', 'files'=>true, 'id'=>'real-dropzone']) !!}
 
                       <div class="dz-message">
@@ -213,7 +201,7 @@
 
                     {!! Form::close() !!}
 
-                    <!-- Dropzone Preview Template -->
+
                      <div id="preview-template" style="display: none;">
 
                          <div class="dz-preview dz-file-preview">
@@ -228,7 +216,7 @@
 
                              <div class="dz-success-mark">
                                  <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                                     <!-- Generator: Sketch 3.2.1 (9971) - http://www.bohemiancoding.com/sketch -->
+
                                      <title>Check</title>
                                      <desc>Created with Sketch.</desc>
                                      <defs></defs>
@@ -240,7 +228,7 @@
 
                              <div class="dz-error-mark">
                                  <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                                     <!-- Generator: Sketch 3.2.1 (9971) - http://www.bohemiancoding.com/sketch -->
+
                                      <title>error</title>
                                      <desc>Created with Sketch.</desc>
                                      <defs></defs>
@@ -254,12 +242,10 @@
 
                          </div>
                      </div>
-                     <!-- End Dropzone Preview Template -->
-
 
                   </div>
                 </div>
-
+              -->
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_links">Website/ Social Media Link:</label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
@@ -379,14 +365,14 @@
                           </div>
 
                           <hr/>
-
+                          <!--
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Files/ Images:</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
                             </div>
                           </div>
-
+                        -->
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="job_title">Links:</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

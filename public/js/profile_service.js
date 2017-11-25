@@ -136,22 +136,23 @@ $(function () {
         var job_id = $('#ps-job-id').text();
         var name = $('#ps-job-name').text();
 
-        var msg = '<p style="font-size:16px">Are you sure you want to request service from <b>' + name + '</b>?\n\n\
-                    <b>Title:</b> ' + title + '\n\
-                    <b>Description:</b> ' + desc + '\n\
-                    <b>Category:</b> ' + cat + '\n\
-                    <b>Price:</b> ' + price + '\n\
-                    <b>Instruction:</b> ' + instruction + '\n\
-                    <b>' + deliver + ' Days Delivery</b></p>';
+        var msg = '<span style="font-size:16px">Are you sure you want to request service from <b>' + name + '</b>?</span>\n\n\
+                    <div class="well"><div class="row"> \
+                    <div class="col-md-2"><b>Title:</b></div><div class="col-md-10">' + title + '</div>\n\
+                    <div class="col-md-2"><b>Description:</b></div><div class="col-md-10"> ' + desc + '</div>\n\
+                    <div class="col-md-2"><b>Category:</b></div><div class="col-md-10">' + cat + '</div>\n\
+                    <div class="col-md-2"><b>Price:</b></div><div class="col-md-10">' + price + '</div>\n\
+                    <div class="col-md-2"><b>Instruction:</b></div><div class="col-md-10">' + instruction + '</div>\n\
+                    <div class="col-md-12"><b><br/>**Note: Approximately ' + deliver + ' Days Delivery Time</b></div></div>';
         BootstrapDialog.show({
-            title: 'Confirm Request Service',
+            title: '<b>Confirmation Request Service</b>',
             message: msg,
             closable: false,
             buttons: [{
                 label: 'Confirm',
                 action: function(dialogItself){
                     dialogItself.close();
-
+                    //console.log(job_id)
                     $.post('/service/add-payment', { 'job_id': job_id }, function(rx){
                         $('.x-table').empty();
                         $('.text-center').removeClass('text-center');

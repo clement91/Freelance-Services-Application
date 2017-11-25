@@ -13,6 +13,7 @@ $(function () {
     $('#btn-payment').on('click', function(e){
       var cardNumber = $('#cardNumber').val();
       var cardName = $('#cardName').val();
+      var buyerName = $('#buyerName').text();
       var expiryMonth = $('#expiryMonth').val();
       var expiryYear = $('#expiryYear').val();
       var securityCode = $('#securityCode').val();
@@ -20,11 +21,11 @@ $(function () {
 
       PNotify.removeAll();
       $('.err-text').removeClass('err-text');
-      console.log(cardNumber + ' - ' + cardName + ' - ' + expiryMonth + ' - ' + expiryYear + ' - ' + securityCode)
+      //console.log(cardNumber + ' - ' + cardName + ' - ' + expiryMonth + ' - ' + expiryYear + ' - ' + securityCode)
       if (cardNumber != '8888-8888-8888-8888')
           $('#cardNumber').addClass('err-text');
 
-      if (cardName.toUpperCase() != 'ADAM MARK')
+      if (cardName.toUpperCase() != buyerName.toUpperCase())
           $('#cardName').addClass('err-text');
 
       if (securityCode != '888')
@@ -39,8 +40,14 @@ $(function () {
       if($('.err-text').length == 0 )
       {
         $.post( "/service/request-job", { "job_id": job_id, }, function(rx) {
-          console.log(rx)
-          $('.x-table').html(rx);
+          //console.log(rx)
+          $('.fa-spinner').removeClass('hide');
+          $('.fa-credit-card').addClass('hide');
+
+          setTimeout(function () {
+            $('.x-table').html(rx);
+          }, 2200);
+
 
         }); // end post
       }

@@ -12,6 +12,9 @@
       }
       .x-table {
         height: 800px;
+        width: 90%;
+        display: flow-root !important;
+        margin: auto;
       }
     </style>
     <h3>Find Service</h3>

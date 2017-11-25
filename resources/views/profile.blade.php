@@ -3,12 +3,21 @@
 @section('content')
 <!-- page content -->
     <h3>Profile</h3>
-
+    <style>
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .has-error {
+        border-color: #CD5C5C;
+      }
+    </style>
     <div class="row">
       <div class="col-md-12">
         <div class="panel panel-info">
           <div class="panel-heading"><b>Personal Details</b></div>
-            <div class="panel-body">
+            <div class="panel-body psb">
                 <div class="row">
                   <div class="col-md-3">
                     <div class="panel panel-info">
@@ -17,7 +26,7 @@
                         <input type="file" id="img-upload" name="img-upload" class="hide" data-user="{{ $id }}" />
 
                         <div class="form-group">
-                          <img id="img-src" src="{{ $image }}" alt="" style="height:210px;width:210px;" class="img-responsive center-block"/>
+                          <img id="img-src" src="{{ Auth::user()->image_url }}" alt="" style="height:210px;width:210px;" class="img-circle img-responsive center-block"/>
                         </div>
 
                         <hr/>
@@ -43,7 +52,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             Email:
-                            <input type="text" class="form-control" id="text-email" value="{{ $email }}">
+                            <input type="text" class="form-control" id="text-email" value="{{ $email }}" required="">
                           </div>
                         </div>
                       </div>
@@ -52,7 +61,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             Contact Number:
-                            <input type="tel" class="form-control" id="text-contact" value="{{ $contact_no }}">
+                            <input type="number" class="form-control" id="text-contact" value="{{ $contact_no }}">
                           </div>
                         </div>
                       </div>
@@ -86,7 +95,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             Postal Code:
-                            <input type="tel" class="form-control" id="text-postal_code" value="{{ $postal_code }}">
+                            <input type="number" class="form-control" id="text-postal_code" value="{{ $postal_code }}">
                           </div>
                         </div>
                       </div>
@@ -96,6 +105,7 @@
                           <div class="form-group">
                             Country:
                             <!-- <input type="text" class="form-control" id="text-country" value="{{ $country }}"> -->
+                            <!--
                             <div class="bfh-selectbox bfh-countries" id="text-country" data-country="{{ $country }}" data-flags="true">
                               <input type="hidden" value="">
                               <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
@@ -110,7 +120,9 @@
                                 </div>
                               </div>
                             </div>
-
+                            -->
+                            <input type="text" id="text-country" class="form-control"/>
+                            <input type="hidden" id="country_code" value="{{ $country }}"/>
                           </div>
                         </div>
                       </div>
@@ -130,7 +142,7 @@
 
                       <div class="row">
                         <div class="form-group">
-                          <input type="button" class="btn btn-primary btn-md pull-right" style="position:relative;right:20px;" id="btn-update" value="Update">
+                          <input type="button" class="btn btn-primary btn-md pull-right" style="position:relative;right:20px;" id="btn-update" value="Update Profile">
                         </div>
                       </div>
 

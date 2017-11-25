@@ -52,6 +52,11 @@
       .compose .compose-body .editor-wrapper {
            min-height: 150px !important;
       }
+      .profile_img {
+        margin: auto;
+        width: 50%;
+        padding: 5px;
+      }
 
     </style>
     <div class="mxcg">
@@ -72,7 +77,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="col-md-3 col-sm-3 col-xs-12" style="text-align: center;">
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
@@ -89,13 +94,13 @@
                           <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
                         </li>
                         -->
-                        <li class="m-top-xs">
+                        <li class="m-top-xs hide">
                           <i class="fa fa-external-link user-profile-icon"></i>
                           <a href="{{ $job['hyperlink'] }}" target="_blank">{{ $job['url_link'] }}</a>
                         </li>
                       </ul>
 
-                      <a class="compose-public btn btn-success"><i class="fa fa-envelope m-right-xs"></i> Contact Me</a>
+                      <a class="compose-public btn btn-success {{ $bitpa }}"><i class="fa fa-envelope m-right-xs"></i> Contact Me</a>
                       <br />
                       {{--
                       <!-- start skills -->
@@ -255,7 +260,7 @@
                           <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="comment-tab">
                             <!-- start recent activity -->
                             <ul class="messages profile_service-txt-left">
-                              <li>
+                              <li class="hide">
                                 <div class="pull-right">
                                   <a href="#" class="btn btn-sm btn-primary" id="btn-add-comment-ps">Add Comment</a>
                                 </div>
@@ -275,36 +280,45 @@
                                 <br/><br/>
                               </li>
                               <div class="ps-comment-list">
-                                @foreach($comment_pub as $comment)
-                                  <li>
-                                    <img src="{{ $comment->xusers->image_url }}" class="avatar" alt="Avatar">
-                                    <div class="message_date">
-                                      <h3 class="date text-info">24</h3>
-                                      <p class="month">May</p>
-                                    </div>
-                                    <div class="message_wrapper">
-                                      <h4 class="heading">{{ $comment->xusers->name }}</h4>
-                                      <blockquote class="message">{{ $comment->msg }}</blockquote>
-                                      <br />
-                                      <p class="ratings">
-                                        @if($comment->rating != 0)
-                                            <a>{{ $comment->rating }}.0</a>
+                                @if($comment_pub->count())
+                                  @foreach($comment_pub as $comment)
+                                    <li>
+                                      <img src="{{ $comment->xusers->image_url }}" class="avatar" alt="Avatar">
+                                      <div class="message_date">
+                                        <?php
+                                          $datetime = $comment->created_at;
+                                          $date = $datetime->format('d');
+                                          $month = $datetime->format('M');
+                                        ?>
+                                        <h3 class="date text-info">{{ $date }}</h3>
+                                        <p class="month">{{ $month }}</p>
+                                      </div>
+                                      <div class="message_wrapper">
+                                        <h4 class="heading">{{ $comment->xusers->name }}</h4>
+                                        <blockquote class="message">{{ $comment->msg }}</blockquote>
+                                        <br />
+                                        <p class="ratings">
+                                          @if($comment->rating != 0)
+                                              <a>{{ $comment->rating }}.0</a>
 
-                                            <?php $rate = $comment->rating; ?>
-                                            @for($i = 0; $i < 5; $i++)
-                                              @if($i < $rate)
-                                                <a href="#"><span class="fa fa-star"></span></a>
-                                              @else
-                                                <a href="#"><span class="fa fa-star-o"></span></a>
-                                              @endif
-                                            @endfor
-                                        @else
-                                          N.A
-                                        @endif
-                                      </p>
-                                    </div>
-                                  </li>
-                                @endforeach
+                                              <?php $rate = $comment->rating; ?>
+                                              @for($i = 0; $i < 5; $i++)
+                                                @if($i < $rate)
+                                                  <a href="#"><span class="fa fa-star"></span></a>
+                                                @else
+                                                  <a href="#"><span class="fa fa-star-o"></span></a>
+                                                @endif
+                                              @endfor
+                                          @else
+                                            N.A
+                                          @endif
+                                        </p>
+                                      </div>
+                                    </li>
+                                  @endforeach
+                                @else
+                                  <h4>No comment & rating at this moment</h4>
+                                @endif
                               </div>
 
                             </ul>

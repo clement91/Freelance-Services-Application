@@ -11,8 +11,8 @@ $(function () {
     $('.selectpicker').selectpicker('refresh');
 
     //selectize
-    var v = $('.vjob_tags').text().split(',');
-    $('.vjob_tags').selectize({
+
+    $('.xvjob_tags').selectize({
         plugins: ['remove_button'],
         delimiter: ',',
         persist: false,
@@ -23,10 +23,15 @@ $(function () {
             }
         }
     });
-    $.each( v, function( i, obj ){
-      $(".vjob_tags")[0].selectize.addOption({value: obj ,text: obj });
-      $(".vjob_tags")[0].selectize.addItem(obj);
 
+
+    var v = $('#vvjob_tags').val().split(',');
+    $.each( v, function( i, obj ){
+      if(obj != "")
+      {
+        $(".xvjob_tags")[0].selectize.addOption({value: obj ,text: obj });
+        $(".xvjob_tags")[0].selectize.addItem(obj);
+      }
     });
 
     $('input.chk-chk').bootstrapSwitch('state', true, false);
@@ -56,7 +61,7 @@ $(function () {
         "category": $('#job_category').val(),
         "price": $('#job_price').val(),
         "instruction": $('#job_instruction').val(),
-        "tags": $('#vjob_tags').val(),
+        "tags": $('.xvjob_tags').val(),
         "location": $('#job_location').val(),
         "days": $('#job_days').val(),
         //"images": $('#job_imgs').val(),
@@ -67,10 +72,16 @@ $(function () {
         "sms": $('#chk-sms').attr('value'),
       }, function(rx) {
         if(rx){
-          BootstrapDialog.show({
-              title: ' Service',
-              message: 'Service updated successful. JOBID:' + rx
+          new PNotify({
+              title: 'Success',
+              text: 'Service updated successful!\nJOB ID:' + rx,
+              type: 'success',
+              styling: 'bootstrap3'
           });
+
+          setTimeout(function () {
+            window.location.href = "http://fsa.dev/service";
+          }, 1500);
         }
 
       });

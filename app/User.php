@@ -32,4 +32,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Profile', 'id', 'owner');
     }
 
+    public function jobprofile()
+    {
+        return $this->hasOne('App\Profile', 'owner', 'id');
+    }
+
 }

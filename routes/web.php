@@ -66,6 +66,6 @@ Route::get('/help', 'HelpController@index');
 Route::get('/contact-feedback', 'ContactFeedbackController@index');
 
 //upload images/ files
-Route::get('/', ['as' => 'upload', 'uses' => 'ServiceController@getUpload']);
+//Route::get('/', ['as' => 'upload', 'uses' => 'ServiceController@getUpload']);
 Route::post('upload', ['as' => 'upload-post', 'uses' =>'ServiceController@postUpload']);
-Route::post('upload/delete', ['as' => 'upload-remove', 'uses' =>'ServiceController@deleteUpload']);
+//Route::post('upload/delete', ['as' => 'upload-remove', 'uses' =>'ServiceController@deleteUpload']);

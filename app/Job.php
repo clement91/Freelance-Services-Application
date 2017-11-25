@@ -73,6 +73,6 @@ class Job extends \Eloquent
             'id' // Local key on users table...
         );
       */
-    }
+  }
 
 }

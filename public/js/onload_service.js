@@ -8,18 +8,24 @@ $(function () {
         }
     });
 
-    //selectize
-    $('#onload_service_tagx').selectize({});
-    var v = $('#onload_service_tagv').val().split(',');
-    $.each( v, function( i, obj ){
-      $("#onload_service_tagx")[0].selectize.addOption({value: obj ,text: obj });
-      $("#onload_service_tagx")[0].selectize.addItem(obj);
+    $('.tgtg').each(function(index) {
+      var id = $(this).attr('id');
+
+      $('#' + id).selectize({});
+      var v = $('#onload_service_tagv-' + index).val().split(',');
+      $.each( v, function( i, obj ){
+        $("#" + id)[0].selectize.addOption({value: obj ,text: obj });
+        $("#" + id)[0].selectize.addItem(obj);
+
+      });
+      $('#' + id)[0].selectize.disable();
 
     });
-    $('#onload_service_tagx')[0].selectize.disable();
+    //selectize
 
     $('.btn-view-profile').on('click',function(e){
       var id = $(this).attr('data-id');
+
       $.post( "/service/view-profile", { "id": id, 'view': 0 }, function(rx) {
         $('.post-xc-table').html(rx);
         $('.post-x-table').addClass('hide');

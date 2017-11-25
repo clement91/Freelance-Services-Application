@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use App\User;
 use App\Job;
@@ -34,7 +35,7 @@ class ServiceController extends Controller
     {
         $out = [];
         $user_id = Auth::user()->id;
-
+        $out['user'] = $user_id;
         //get open job
         $jobs = Job::where('users', $user_id);
         $jobs_g = $jobs->get();
@@ -58,8 +59,39 @@ class ServiceController extends Controller
           $out['openJobs'] = null;
         }
 
-        //get pending job
         $jobs_ids = $jobs->pluck('job_id');
+        //get pending request
+        $requestPending_g = JobTransaction::where('status', 'Pending')
+                    ->where('customer_id', $user_id)
+                    ->get();
+        if($requestPending_g->count())
+        {
+          foreach($requestPending_g as $key=>$job){
+
+            $jbs = Job::where('job_id', $job->job_id)->first();
+            $seller = User::where('id', $jbs->users)->first();
+
+            $out['pendingRequest'][$key]['raw_id'] = $jbs->id;
+            $out['pendingRequest'][$key]['id'] = $job->id;
+            $out['pendingRequest'][$key]['job_id'] = $job->job_id. $job->id;
+            $out['pendingRequest'][$key]['title'] = $jbs->title;
+            $out['pendingRequest'][$key]['seller_name'] = $seller->name;
+
+            $Year = $job->created_at->format('Y');
+            $Month = $job->created_at->format('M');
+            $Date = $job->created_at->format('d');
+
+            $out['pendingRequest'][$key]['date'] = $Date;
+            $out['pendingRequest'][$key]['month'] = $Month;
+            $out['pendingRequest'][$key]['year'] = $Year;
+          }
+        }
+        else
+        {
+          $out['pendingRequest'] = null;
+        }
+
+        //get pending job
         $jobs_g = JobTransaction::where('status', 'Pending')
                     ->whereIn('job_id', $jobs_ids)
                     ->get();
@@ -88,6 +120,37 @@ class ServiceController extends Controller
         else
         {
           $out['pendingJobs'] = null;
+        }
+
+        //get in progress request
+        $requestProgress_g = JobTransaction::where('status', 'Progress')
+                    ->where('customer_id', $user_id)
+                    ->get();
+        if($requestProgress_g->count())
+        {
+          foreach($requestProgress_g as $key=>$job){
+
+            $jbs = Job::where('job_id', $job->job_id)->first();
+            $seller = User::where('id', $jbs->users)->first();
+
+            $out['progressRequest'][$key]['id'] = $job->id;
+            $out['progressRequest'][$key]['job_id'] = $job->job_id. $job->id;
+            $out['progressRequest'][$key]['title'] = $jbs->title;
+            $out['progressRequest'][$key]['seller_name'] = $seller->name;
+            $out['progressRequest'][$key]['progress_status'] = $job->progress_status;
+
+            $Year = $job->created_at->format('Y');
+            $Month = $job->created_at->format('M');
+            $Date = $job->created_at->format('d');
+
+            $out['progressRequest'][$key]['date'] = $Date;
+            $out['progressRequest'][$key]['month'] = $Month;
+            $out['progressRequest'][$key]['year'] = $Year;
+          }
+        }
+        else
+        {
+          $out['progressRequest'] = null;
         }
 
         //get in progress job
@@ -122,9 +185,42 @@ class ServiceController extends Controller
           $out['inprogressJobs'] = null;
         }
 
+        //get in progress request
+        $requestClosed_g = JobTransaction::where('status', 'Completed/Closed')
+                    ->where('customer_id', $user_id)
+                    ->get();
+        if($requestClosed_g->count())
+        {
+          foreach($requestClosed_g as $key=>$job){
+
+            $jbs = Job::where('job_id', $job->job_id)->first();
+            $seller = User::where('id', $jbs->users)->first();
+
+            $out['closeRequest'][$key]['job_id'] = $job->job_id. $job->id;
+            $out['closeRequest'][$key]['title'] = $jbs->title;
+            $out['closeRequest'][$key]['seller_name'] = $seller->name;
+            $out['closeRequest'][$key]['status'] = $job->status;
+
+            $Year = $job->created_at->format('Y');
+            $Month = $job->created_at->format('M');
+            $Date = $job->created_at->format('d');
+
+            $out['closeRequest'][$key]['date'] = $Date;
+            $out['closeRequest'][$key]['month'] = $Month;
+            $out['closeRequest'][$key]['year'] = $Year;
+
+            $out['closeRequest'][$key]['rateCount'] = JobPublicComment::where('job_transaction_id', $job->job_id. $job->id)->count();
+
+          }
+        }
+        else
+        {
+          $out['closeRequest'] = null;
+        }
+
         //get close job
         $jobs_ids = $jobs->pluck('job_id');
-        $jobs_g = JobTransaction::whereIn('status', ['Closed', 'Rejected', 'Refunded'])
+        $jobs_g = JobTransaction::whereIn('status', ['Completed/Closed', 'Rejected', 'Refunded'])
                     ->whereIn('job_id', $jobs_ids)
                     ->orderBy('Status')
                     ->get();
@@ -278,6 +374,7 @@ class ServiceController extends Controller
     public function find_job(Request $request)
     {
         $out = [];
+        $user_id = Auth::user()->id;
 
         $keyword = $request->keyword;
         $location = explode(",", str_replace(' ', '', $request->location));
@@ -294,11 +391,50 @@ class ServiceController extends Controller
         $out['jobs'] = Job::search($keyword, null, true)
                         ->whereBetween('price', $price)
                         ->whereIn('location', $location_ids)
+                        ->where('users', '<>', $user_id)
                         ->with('xusers')
                         ->with('xcategory')
                         ->with('xlocation')
-                        ->with('xpubComments')
+                        //->with('xpubComments')
                         ->get();
+
+        $out['commentRates'] = DB::table('job_public_comments')
+                              ->join('job_transactions', 'job_public_comments.job_transaction_id', '=', 'job_transactions.job_transaction_id')
+                              ->join('jobs', 'job_transactions.job_id', '=', 'jobs.job_id')
+                              ->select('jobs.job_id', 'job_public_comments.*')
+                              ->orderBy('created_at', 'Desc')
+                              ->get();
+
+        $avgStars = JobPublicComment::groupBy('job_transaction_id')
+                    ->select('job_transaction_id', 'rating')
+                    ->avg('rating');
+
+        $distinct_job = Job::search($keyword, null, true)
+                        ->whereBetween('price', $price)
+                        ->whereIn('location', $location_ids)
+                        ->where('users', '<>', $user_id)
+                        ->distinct('job_id')
+                        ->select('job_id')
+                        ->get();
+
+        if($distinct_job->count())
+        {
+          foreach($distinct_job as $k=>$job)
+          {
+             $avg = DB::table('job_public_comments')
+                      ->join('job_transactions', 'job_public_comments.job_transaction_id', '=', 'job_transactions.job_transaction_id')
+                      ->join('jobs', 'job_transactions.job_id', '=', 'jobs.job_id')
+                      ->where('jobs.job_id', $job->job_id)
+                      ->avg('job_public_comments.rating');
+
+              $out['commentStars'][$k]['job_id'] = $job->job_id;
+              $out['commentStars'][$k]['average'] = round($avg, 0,PHP_ROUND_HALF_DOWN);
+          }
+        }
+        else
+        {
+          $out['commentStars'] = null;
+        }
 
         $out['users'] = User::all();
 
@@ -318,24 +454,44 @@ class ServiceController extends Controller
     {
       $out = [];
 
-      $job_f = Job::where('id', $request->id)->first();
-      $user_id = $job_f->users;
+      if($request->view == 1)
+      {
+        $jobTrans_f = JobTransaction::where('id', $request->id)->first();
+        $user_id = $jobTrans_f->customer_id;
+        $job_f = Job::where('job_id', $jobTrans_f->job_id)->first();
+
+
+      }
+      else if($request->view == 2)
+      {
+        $jobTrans_f = JobTransaction::where('id', $request->id)->first();
+        $job_f = Job::where('job_id', $jobTrans_f->job_id)->first();
+        $user_id = $job_f->users;
+      }
+      else
+      {
+        $job_f = Job::where('id', $request->id)->first();
+        $user_id = $job_f->users;
+      }
 
       $user_f = User::where('id', $user_id)->first();
       $cat_f = JobCategory::where('id', $job_f->category)->first();
       $location_f = Location::where('id', $job_f->location)->first();
 
-      $out['comment_pub'] = JobPublicComment::where('job_transaction_id', $job_f->job_id)
+      $out['comment_pub'] = JobPublicComment::where('job_transaction_id', 'like', '%'. $job_f->job_id. '%')
                               ->with('xusers')
                               ->orderBy('created_at', 'desc')
                               ->get();
 
       $profile = Profile::where('owner', $user_id)->first();
-      $out['profile'] = [
-        'joined_at' => $profile->created_at->format('d M Y'),
-        'desc' => $profile->desc,
-        'contact_no'  => $profile->contact_no
-      ];
+      if($profile != null)
+        $out['profile'] = [
+          'joined_at' => $profile->created_at->format('d M Y'),
+          'desc' => $profile->desc,
+          'contact_no'  => $profile->contact_no
+        ];
+      else
+        $out['profile'] = null;
 
       $out['view'] = $request->view;
 
@@ -420,6 +576,11 @@ class ServiceController extends Controller
       $jobtrans = JobTransaction::where('id', $request->id);
       $jobtrans->update(['progress_status' =>  $request->value ]);
 
+      if($request->value == 100)
+      {
+        $jobtrans->update(['status' =>  'Completed/Closed' ]);
+      }
+
       return 0;
     }
 
@@ -432,17 +593,17 @@ class ServiceController extends Controller
 
        $out['job'] = $job;
        $out['buyer'] = User::where('id', $user_id)
-                          ->with('xprofile')
+                          ->with('jobprofile')
                           ->first();
        $out['seller'] = User::where('id', $job->users)
-                         ->with('xprofile')
+                         ->with('jobprofile')
                          ->first();
 
         //return $out;
         return view('payment', $out);
     }
 
-
+    /*
     public function getUpload()
     {
         return 0;
@@ -457,4 +618,5 @@ class ServiceController extends Controller
     {
         return 0;
     }
+    */
 }

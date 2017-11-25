@@ -35,10 +35,24 @@
                 <div class="col-sm-4 invoice-col">
                   Buyer:
                   <address>
-                                  <strong>{{ $buyer->name }}</strong>
-                                  <br>{{ $buyer->address_1 }}, {{ $buyer->address_2 }}
-                                  <br>{{ $buyer->country }}, {{ $buyer->postal_code }}
-                                  <br>Phone: {{ $buyer->contact_no }}
+                                  <strong id="buyerName">{{ $buyer->name }}</strong>
+                                  @if($buyer->jobprofile != null)
+                                    @if($buyer->jobprofile->address_1 != "")
+                                      <br>{{ $buyer->jobprofile->address_1 }}
+                                        @if($buyer->jobprofile->address_2 != "")
+                                          , {{ $buyer->jobprofile->address_2 }}
+                                        @endif
+                                    @endif
+                                    @if($buyer->jobprofile->country != "")
+                                      <br>{{ $buyer->jobprofile->country }}
+                                      @if($buyer->jobprofile->postal_code != "")
+                                        , {{ $buyer->jobprofile->postal_code }}
+                                      @endif
+                                    @endif
+                                    @if($buyer->jobprofile->contact_no != "")
+                                      <br>Phone: {{ $buyer->jobprofile->contact_no }}
+                                    @endif
+                                  @endif
                                   <br>Email: {{ $buyer->email }}
                               </address>
                 </div>
@@ -47,9 +61,23 @@
                   Seller:
                   <address>
                                 <strong>{{ $seller->name }}</strong>
-                                <br>{{ $seller->address_1 }}, {{ $seller->address_2 }}
-                                <br>{{ $seller->country }}, {{ $seller->postal_code }}
-                                <br>Phone: {{ $seller->contact_no }}
+                                @if($seller->jobprofile != null)
+                                  @if($seller->jobprofile->address_1 != "")
+                                    <br>{{ $seller->jobprofile->address_1 }}
+                                      @if($seller->jobprofile->address_2 != "")
+                                        , {{ $seller->jobprofile->address_2 }}
+                                      @endif
+                                  @endif
+                                  @if($seller->jobprofile->country != "")
+                                    <br>{{ $seller->jobprofile->country }}
+                                    @if($seller->jobprofile->postal_code != "")
+                                      , {{ $seller->jobprofile->postal_code }}
+                                    @endif
+                                  @endif
+                                  @if($seller->jobprofile->contact_no != "")
+                                    <br>Phone: {{ $seller->jobprofile->contact_no }}
+                                  @endif
+                                @endif
                                 <br>Email: {{ $seller->email }}
                               </address>
                 </div>
@@ -69,7 +97,7 @@
                       <tr>
                         <th>Item</th>
                         <th>Service Title</th>
-                        <th>Service Id #</th>
+                        <th>Service Id#</th>
                         <th style="width: 59%">Description</th>
                         <th>Price</th>
                       </tr>
@@ -97,7 +125,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="text-align: right;"><b>Sub total:</b></td>
+                        <td style="text-align: right;"><b>Sub Total:</b></td>
                         <td><b>${{ $total }}</b></td>
                       </tr>
                     </tbody>
@@ -117,7 +145,7 @@
                   <img src="img/payment/paypal.png" alt="Paypal">
                   <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                     Take note: This will be used for internal project (fsa). Therefore, there would no real transaction require.<br/>For
-                    credit card simulator purpose, please use Card number: <b>8888-8888-8888-8888</b> Cardholder's name: <b>Adam Mark</b> Expiry date: <b>01/2022</b>
+                    credit card simulator purpose, please use Card number: <b>8888-8888-8888-8888</b> Cardholder's name: <b>[Your Account Name]</b> Expiry date: <b>01/2022</b>
                     Security code: <b>888</b>
                   </p>
                 </div>
@@ -127,16 +155,18 @@
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-xs-12">
-                        <label>Card number:</label>
-                        <input id="cardNumber" type="text" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;">
-                      <div class="col-xs-12">
                         <label>Cardholder's name:</label>
                         <input id="cardName" type="text" class="form-control"/>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-xs-12" style="margin-top: 10px;">
+                        <label>Card number:</label>
+                        <input id="cardNumber" type="text" class="form-control"/>
+                      </div>
+                    </div>
+
                     <div class="row" style="margin-top: 10px;">
                       <div class="col-xs-4">
                         <label>Expiry date:</label><br/>
@@ -181,7 +211,8 @@
               <div class="row no-print">
                 <br/>
                 <div class="col-xs-12">
-                  <button id="btn-payment" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                  <button id="btn-payment" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
+                      <i class="fa fa-spinner fa-spin hide"></i> Submit Payment</button>
                   <button class="btn btn-default pull-right" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
                   <!--
                   <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>

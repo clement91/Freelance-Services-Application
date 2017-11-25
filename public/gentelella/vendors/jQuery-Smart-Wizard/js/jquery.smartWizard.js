@@ -65,11 +65,40 @@ function SmartWizard(target, options) {
         this.contentWidth = $this.elmStepContainer.width();
 
         $($this.buttons.next).click(function() {
-            updateConfirmPage();
-            $('.thrsteps').removeClass('hide');
+          var result = 0;
+            $('.has-error').removeClass('has-error');
 
-            $this.goForward();
-            return false;
+            $('#step-1').find('.form-control').each(function(index) {
+                if($(this).val() == '')
+                {
+                  $(this).addClass('has-error');
+                  result = 1;
+                }
+            });
+
+            if($('.selectize-input').children().length == 1)
+            {
+              $('.selectize-input').addClass('has-error');
+              result = 1;
+            }
+
+            if(result == 0)
+            {
+              updateConfirmPage();
+              $('.thrsteps').removeClass('hide');
+
+              $this.goForward();
+              return false;
+            }
+            else
+            {
+              new PNotify({
+                  title: 'Error',
+                  text: 'Make sure all fields are filled up\nwith valid information.',
+                  type: 'error',
+                  styling: 'bootstrap3'
+              });
+            }
         });
         $($this.buttons.previous).click(function() {
             $this.goBackward();
@@ -90,33 +119,62 @@ function SmartWizard(target, options) {
                     }
                   */
                   //console.log("$('#job_title').val():" + $('#job_title').val());
-
-                  $.post( "/service/submit-job", {
-                    "id" : null,
-                    "title": $('#job_title').val(),
-                    "desc": $('#job_desc').val(),
-                    "category": $('#job_category').val(),
-                    "price": $('#job_price').val(),
-                    "instruction": $('#job_instruction').val(),
-                    "tags": $('#job_tags').val(),
-                    "location": $('#job_location').val(),
-                    "days": $('#job_days').val(),
-                    //"images": $('#job_imgs').val(),
-                    "images": 'test',
-                    "links": $('#job_links').val(),
-                    "max": $('#max_jobs').val(),
-                    "email": $('#chk-email').attr('value'),
-                    "sms": $('#chk-sms').attr('value'),
-                  }, function(rx) {
-                    if(rx){
-                      console.log(rx)
-                      BootstrapDialog.show({
-                          title: ' Service',
-                          message: 'Service created successful. JOBID:' + rx
-                      });
-                    }
-
+                  $('.has-error').removeClass('has-error');
+                  $('#step-1').find('.form-control').each(function(index) {
+                      if($(this).val() == '')
+                      {
+                        $(this).addClass('has-error');
+                      }
                   });
+
+                  if($('.selectize-input').children().length == 1)
+                  {
+                    $('.selectize-input').addClass('has-error');
+                  }
+
+                  if($('.has-error').length == 0)
+                  {
+                    $.post( "/service/submit-job", {
+                      "id" : null,
+                      "title": $('#job_title').val(),
+                      "desc": $('#job_desc').val(),
+                      "category": $('#job_category').val(),
+                      "price": $('#job_price').val(),
+                      "instruction": $('#job_instruction').val(),
+                      "tags": $('#job_tags').val(),
+                      "location": $('#job_location').val(),
+                      "days": $('#job_days').val(),
+                      //"images": $('#job_imgs').val(),
+                      "images": 'test',
+                      "links": $('#job_links').val(),
+                      "max": $('#max_jobs').val(),
+                      "email": $('#chk-email').attr('value'),
+                      "sms": $('#chk-sms').attr('value'),
+                    }, function(rx) {
+                      if(rx){
+                        console.log(rx)
+                        new PNotify({
+                            title: 'Success',
+                            text: 'Service created successful! JOB ID:' + rx,
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });
+
+                        setTimeout(function () {
+                          window.location.href = "http://fsa.dev/service";
+                        }, 1500);
+
+                      }
+                    });
+                  }
+                  else{
+                    new PNotify({
+                        title: 'Error',
+                        text: 'Please make sure all fields are filled up.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                  }
 
                 }
             }
